@@ -1,0 +1,74 @@
+{
+    "RECORDS":[
+        {
+            "id":1,
+            "time":"00:30",
+            "details":"30 minutes"
+        },
+        {
+            "id":2,
+            "time":"01:00",
+            "details":"1 hour"
+        },
+        {
+            "id":3,
+            "time":"01:30",
+            "details":"1 hour and 30 minutes"
+        },
+        {
+            "id":4,
+            "time":"02:00",
+            "details":"2 hours"
+        },
+        {
+            "id":5,
+            "time":"02:30",
+            "details":"2 hours and 30 minutes"
+        },
+        {
+            "id":6,
+            "time":"03:00",
+            "details":"3 hours"
+        },
+        {
+            "id":7,
+            "time":"03:30",
+            "details":"3 hours and 30 minutes"
+        },
+        {
+            "id":8,
+            "time":"04:00",
+            "details":"4 hours"
+        },
+        {
+            "id":9,
+            "time":"04:30",
+            "details":"4 hours and 30 minutes"
+        },
+        {
+            "id":10,
+            "time":"05:00",
+            "details":"5 hours"
+        },
+        {
+            "id":11,
+            "time":"05:30",
+            "details":"5 hours and 30 minutes"
+        },
+        {
+            "id":12,
+            "time":"06:00",
+            "details":"6 hours"
+        },
+        {
+            "id":13,
+            "time":"06:30",
+            "details":"6 hours and 30 minutes"
+        },
+        {
+            "id":17,
+            "time":"07:00",
+            "details":"7 hours"
+        }
+    ]
+}
