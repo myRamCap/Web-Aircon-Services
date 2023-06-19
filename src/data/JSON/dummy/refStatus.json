@@ -1,0 +1,24 @@
+{
+    "RECORDS":[
+        {
+            "id":1,
+            "name":"In Process"
+        },
+        {
+            "id":2,
+            "name":"Completed"
+        },
+        {
+            "id":3,
+            "name":"Up Coming"
+        },
+        {
+            "id":4,
+            "name":"Missed"
+        },
+        {
+            "id":5,
+            "name":"Cancelled"
+        }
+    ]
+}

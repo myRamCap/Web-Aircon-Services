@@ -1,0 +1,24 @@
+{
+    "RECORDS":[
+        {
+            "id":1,
+            "name":"Ramcap 1 Dealers"
+        },
+        {
+            "id":2,
+            "name":"Ramcap 2 Dealers"
+        },
+        {
+            "id":3,
+            "name":"Ramcap 3 Dealers"
+        },
+        {
+            "id":4,
+            "name":"Ramcap 4 Dealers"
+        },
+        {
+            "id":5,
+            "name":"Ramcap 5 Dealers"
+        }
+    ]
+}
