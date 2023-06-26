@@ -14,6 +14,7 @@ export default function UserModal(props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [roles, setRoles] = useState([])
   const [hide, setHide] = useState(true)
+  const [adminhide, setadminHide] = useState(true)
   const [service_center, setService_Center] = useState([])
   const [branchManager, setBranchManager] = useState([])
   const [errors, setErrors] = useState(null)
@@ -78,6 +79,12 @@ export default function UserModal(props) {
       } else {
         setHide(false)
       }
+    } else if (props.userRole == 1) {
+      if (newValue.name === "Super Admin") {
+        setadminHide(false)
+      } else {
+        setadminHide(true)
+      }
     }
   }
 
@@ -99,7 +106,7 @@ export default function UserModal(props) {
 
   const onSubmit = async (ev) => {
     ev.preventDefault()
-    setIsSubmitting(true);
+    // setIsSubmitting(true);
     const payload = {...user}
 
     try {
@@ -143,8 +150,12 @@ export default function UserModal(props) {
         allowed_bm: props.Data.allowed_bm,
       })
 
-      if (props.Data.role_id == 4) {
+      if (props.Data.role_id == 3) {
         setHide(true)
+        setadminHide(true)
+      } else if (props.Data.role_id == 2) {
+        setHide(false)
+        setadminHide(true)
       }
     }
  
@@ -173,6 +184,7 @@ export default function UserModal(props) {
       })
       setErrors(null)
       setHide(false)
+      setadminHide(false)
     }
   },[props.show])
 
@@ -289,7 +301,7 @@ export default function UserModal(props) {
                 </Col>
               </Row>
             </Form.Group>
-            { props.userRole == 1 &&
+            { props.userRole == 1 && adminhide &&
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Row>
                   <Col xs={12} md={6}>
@@ -344,7 +356,7 @@ export default function UserModal(props) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row >
                 <Col xs={12} md={12}>
-                  <Button variant="success"  type="submit" disabled={isSubmitting}>Save Changes</Button>
+                  <Button variant="success"  type="submit" disabled={isSubmitting}>{id ? 'Save Changes' : 'Save'}</Button>
                 </Col>
               </Row>
             </Form.Group>

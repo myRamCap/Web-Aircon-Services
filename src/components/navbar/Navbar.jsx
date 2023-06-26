@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../../assets/images/Logo-RC.png'
+import logo from '../../assets/images/mangpogs.png'
 import axiosClient from '../../axios-client';
 import { useStateContext } from '../../contexts/ContextProvider';
 import Swal from 'sweetalert2'
@@ -75,9 +75,9 @@ export default function Navbar() {
                             <i>
                                 <box-icon name='image-alt' color={splitLocation[1] === "serviceslogo" ? 'white' : ''} />
                             </i>
-                            <span className="link_name">Managed Services</span>
+                            <span className="link_name">AC Managed Services</span>
                         </Link>
-                        <span className="tooltip">Managed Services</span>
+                        <span className="tooltip">AC Managed Services</span>
                     </li>
                 ) : null
             }
@@ -97,23 +97,23 @@ export default function Navbar() {
             { role == 1 ? 
                 (   
                     <li>
-                        <Link className={splitLocation[1] === "vehicles" ? "isActive" : ""} to="/vehicles">
+                        <Link className={splitLocation[1] === "airconlist" ? "isActive" : ""} to="/airconlist">
                             <i>
-                                <box-icon name='car' color={splitLocation[1] === "vehicles" ? 'white' : ''} />
+                                <box-icon name='car' color={splitLocation[1] === "airconlist" ? 'white' : ''} />
                             </i>
                             
-                            <span className="link_name">Vehicles</span>
+                            <span className="link_name">Aircon List</span>
                         </Link>
-                        <span className="tooltip">Vehicles</span>
+                        <span className="tooltip">Aircon List</span>
                     </li>
                 ) : null
             }
-            { role == 1 || role == 2 || role == 3 || role == 4  ? 
+            { role == 1 || role == 2 || role == 3  ? 
                 ( 
                     <li>
                         <Link className={splitLocation[1] === "servicecenter" ? "isActive" : ""} to="/servicecenter">
                             <i>
-                                <box-icon  type='solid' name='car-mechanic' color={splitLocation[1] === "servicecenter" ? 'white' : ''} />
+                                <box-icon type='solid' name='building-house' color={splitLocation[1] === "servicecenter" ? 'white' : ''}  />
                             </i>
                             
                             <span className="link_name">Service Center</span>
@@ -122,7 +122,7 @@ export default function Navbar() {
                     </li>
                 ) : null
             }
-            { role == 1 || role == 2 || role == 3 || role == 4 ? 
+            { role == 1 || role == 2 || role == 3  ? 
                 ( 
                     <li>
                         <Link className={splitLocation[1] === "bookings" ? "isActive" : ""} to="/bookings">

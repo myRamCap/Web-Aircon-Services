@@ -71,7 +71,12 @@ export default function TimeSlotModal(props) {
         ...operationTime,
         category: event.target.value,
       })
-    } 
+    } else {
+      setOperationTime({
+        ...operationTime,
+        sunday: 0,
+      })
+    }
   };
 
   const handleCheckboxSun = (event) => {
@@ -82,7 +87,12 @@ export default function TimeSlotModal(props) {
         ...operationTime,
         sunday: event.target.value,
       })
-    } 
+    } else {
+      setOperationTime({
+        ...operationTime,
+        sunday: 0,
+      })
+    }
   }
 
   const handleCheckboxMon = (event) => {
@@ -93,7 +103,12 @@ export default function TimeSlotModal(props) {
         ...operationTime,
         monday: event.target.value,
       })
-    } 
+    } else {
+      setOperationTime({
+        ...operationTime,
+        monday: 0,
+      })
+    }
   }
 
   const handleCheckboxTue = (event) => {
@@ -104,7 +119,12 @@ export default function TimeSlotModal(props) {
         ...operationTime,
         tuesday: event.target.value,
       })
-    } 
+    } else {
+      setOperationTime({
+        ...operationTime,
+        tuesday: 0,
+      })
+    }
   }
 
   const handleCheckboxWed = (event) => {
@@ -115,7 +135,12 @@ export default function TimeSlotModal(props) {
         ...operationTime,
         wednesday: event.target.value,
       })
-    } 
+    } else {
+      setOperationTime({
+        ...operationTime,
+        wednesday: 0,
+      })
+    }
   }
 
   const handleCheckboxThu = (event) => {
@@ -126,7 +151,12 @@ export default function TimeSlotModal(props) {
         ...operationTime,
         thursday: event.target.value,
       })
-    } 
+    } else {
+      setOperationTime({
+        ...operationTime,
+        thursday: 0,
+      })
+    }
   }
 
   const handleCheckboxFri = (event) => {
@@ -137,7 +167,12 @@ export default function TimeSlotModal(props) {
         ...operationTime,
         friday: event.target.value,
       })
-    } 
+    } else {
+      setOperationTime({
+        ...operationTime,
+        friday: 0,
+      })
+    }
   }
 
   const handleCheckboxSat = (event) => {
@@ -148,7 +183,12 @@ export default function TimeSlotModal(props) {
         ...operationTime,
         saturday: event.target.value,
       })
-    } 
+    } else {
+      setOperationTime({
+        ...operationTime,
+        saturday: 0,
+      })
+    }
   }
 
   const onSubmit = async (ev) => {
@@ -473,7 +513,7 @@ export default function TimeSlotModal(props) {
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    Save Changes
+                    {id ? 'Save Changes' : 'Save'}
                   </Button>
                 </Col>
               </Row>

@@ -1,0 +1,44 @@
+{
+    "RECORDS":[
+        {
+            "id":1,
+            "name":"Ductless Mini - Split"
+        },
+        {
+            "id":2,
+            "name":"Window Air Conditioner"
+        },
+        {
+            "id":3,
+            "name":"Portable Air Conditioner"
+        },
+        {
+            "id":4,
+            "name":"Floor Mounted Air Conditioner"
+        },
+        {
+            "id":5,
+            "name":"Smart Air Conditioner"
+        },
+        {
+            "id":6,
+            "name":"Central Air Conditioner"
+        },
+        {
+            "id":7,
+            "name":"Ceiling Casstte Air Conditioner"
+        },
+        {
+            "id":8,
+            "name":"Ceiling Suspended Air Conditioner"
+        },
+        {
+            "id":9,
+            "name":"Wall Mounted Split Air Conditioner"
+        },
+        {
+            "id":10,
+            "name":"Others"
+        }
+    ]
+}

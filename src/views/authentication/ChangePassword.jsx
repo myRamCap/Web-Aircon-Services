@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Wave from '../../assets/images/wave.png'
-import RC from '../../assets/images/Logo-RC.png'
+import RC from '../../assets/images/mangpogs.png'
 import Avatar from '../../assets/images/avatar.svg'
 import axiosClient from '../../axios-client'
 import { useStateContext } from '../../contexts/ContextProvider'

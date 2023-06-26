@@ -43,7 +43,7 @@ export default function ServiceCenterModal(props) {
     province: "",
     longitude: "",
     latitude: "",
-    facility: "",
+    group: "",
     corporate_manager_id: user_ID,
     municipality_code: "",
     image: "",
@@ -196,7 +196,7 @@ export default function ServiceCenterModal(props) {
         province: props.Data.province,
         longitude: props.Data.longitude,
         latitude: props.Data.latitude,
-        facility: props.Data.facility,
+        group: props.Data.group,
         image: props.Data.image,
       })
     }
@@ -216,7 +216,7 @@ export default function ServiceCenterModal(props) {
         province: "",
         longitude: "",
         latitude: "",
-        facility: "",
+        group: "",
         municipality_code: "",
         image: "",
       })
@@ -412,10 +412,10 @@ export default function ServiceCenterModal(props) {
                 <Col xs={12} md={6}>
                   <TextField 
                     type="number" 
-                    value={serviceCenter.facility}  
-                    onChange={ev => setServiceCenter({...serviceCenter, facility: ev.target.value})}  
+                    value={serviceCenter.group}  
+                    onChange={ev => setServiceCenter({...serviceCenter, group: ev.target.value})}  
                     id="branchManager" 
-                    label="Facility" 
+                    label="Group" 
                     variant="outlined" 
                     fullWidth
                   />
@@ -452,7 +452,7 @@ export default function ServiceCenterModal(props) {
                     type="submit" 
                     disabled={isSubmitting} 
                   >
-                    Save Changes
+                    {id ? 'Save Changes' : 'Save'}
                   </Button>
                 </Col>
               </Row>

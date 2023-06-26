@@ -22,6 +22,7 @@ export default function Booking(props) {
   const [disabledTime, setDisabledTime] = useState(true)
   const id = props.Data?.id ?? null
   const navigate = useNavigate()
+  const [operation, setOperation] = useState([])
   const [services, setServices] = useState([])
   const [timeSlot, setTimeSlot] = useState([])
   const [vehicle, setVehicle] = useState([])
@@ -29,9 +30,9 @@ export default function Booking(props) {
   const [booking, setBooking] = useState({
     id: null,
     client_id: "",
-    client_name: "",
-    vehicle_id: "",
-    vehicle_name: "",
+    contact_number: "",
+    aircon_id: "",
+    aircon_name: "",
     services_id: "",
     service: "",
     estimated_time: "",
@@ -55,6 +56,18 @@ export default function Booking(props) {
       // Handle error
     }
   }
+
+  const getOperation = async () => {
+    try {
+      const response = await axiosClient.get(`/web/service_center/operation/${user_ID}`);
+      const { data } = response;
+      setOperation(data);
+    } catch (error) {
+      // Handle error
+    }
+  }
+
+  
 
   const getServices = async () => {
     try {
@@ -91,9 +104,9 @@ export default function Booking(props) {
     setBooking({
       ...booking,
       client_id: newValue.id,
-      client_name: newValue.fullname,
-      vehicle_name: "",
-      vehicle_id: "",
+      contact_number: newValue.contact_number,
+      aircon_name: "",
+      aircon_id: "",
     })
 
     try {
@@ -145,10 +158,11 @@ export default function Booking(props) {
   }
 
   const handleChangeVehicle = (event, newValue) => {
+    console.log(newValue)
     setBooking({
       ...booking,
-      vehicle_id: newValue.id,
-      vehicle_name: newValue.vehicle_name,
+      aircon_id: newValue.id,
+      aircon_name: newValue.aircon_name,
     })
   }
 
@@ -193,6 +207,7 @@ export default function Booking(props) {
 
   const onSubmit = async (ev) => {
     ev.preventDefault()
+    setErrors(null)
     setIsSubmitting(true);
     const payload = { ...booking }
 
@@ -225,13 +240,21 @@ export default function Booking(props) {
     if (id) {
       const [year, month, day] =  props.Data.booking_date.split('-')
       const date = `${year}/${month}/${day}` 
+      const { data } = axiosClient.get(`/web/bookings/${user_ID}/${date}`);
+      
+      // setTimeSlot(data.data); 
+      axiosClient.get(`/web/bookings/${user_ID}/${date}`)
+      .then(({data}) => {
+        setTimeSlot(data.data); 
+      })
+      
       setBooking({
         ...booking,
         id: props.Data.id,
         client_id: props.Data.client_id,
-        client_name: props.Data.client_name,
-        vehicle_id: props.Data.vehicle_id,
-        vehicle_name: props.Data.vehicle_name,
+        contact_number: props.Data.contact_number,
+        aircon_id: props.Data.aircon_id,
+        aircon_name: props.Data.aircon_name,
         services_id: props.Data.services_id,
         service: props.Data.service,
         service_center_id: props.Data.service_center_id,
@@ -256,6 +279,7 @@ export default function Booking(props) {
       getServices()
       service_center()
       getClients()
+      getOperation()
     } else if (props.show == false) {
  
 
@@ -263,9 +287,9 @@ export default function Booking(props) {
         ...booking,
         id: null,
         client_id: "",
-        client_name: "",
-        vehicle_id: "",
-        vehicle_name: "",
+        contact_number: "",
+        aircon_id: "",
+        aircon_name: "",
         services_id: "",
         service: "",
         estimated_time: "",
@@ -286,7 +310,8 @@ export default function Booking(props) {
   
   const isWeekend = (date) => {
     const day = new Date(date).getDay();
-    return day === 0 || day === 6 || day === 1; // 0 represents Sunday, 6 represents Saturday
+    const daysOff = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  return operation[daysOff[day]] === 0;
   };
 
   return (
@@ -312,13 +337,13 @@ export default function Booking(props) {
                     disableClearable
                     options={optionsClient.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
                     onChange={handleChangeClient}
-                    value={booking.client_name}
-                    getOptionLabel={(options) => options.fullname ? options.fullname.toString() : booking.client_name}
-                    isOptionEqualToValue={(option, value) => option.fullname ?? "" === booking.client_name}
+                    value={booking.contact_number}
+                    getOptionLabel={(options) => options.contact_number ? options.contact_number.toString() : booking.contact_number}
+                    isOptionEqualToValue={(option, value) => option.contact_number ?? "" === booking.contact_number}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label="Client Name"
+                        label="Mobile Number"
                         InputProps={{
                           ...params.InputProps,
                           type: 'search',
@@ -395,15 +420,15 @@ export default function Booking(props) {
                     id="vehicle"
                     disableClearable
                     disabled={disabledVehicle}
-                    value={booking.vehicle_name}
+                    value={booking.aircon_name}
                     onChange={handleChangeVehicle}
                     options={vehicle.data || []}
-                    getOptionLabel={(options) => options.vehicle_name ? options.vehicle_name.toString() : booking.vehicle_name} 
-                    isOptionEqualToValue={(option, value) => option.vehicle_name ?? null === booking.vehicle_name}
+                    getOptionLabel={(options) => options.aircon_name ? options.aircon_name.toString() : booking.aircon_name} 
+                    isOptionEqualToValue={(option, value) => option.aircon_name ?? null === booking.aircon_name}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label="Vehicle"
+                        label="Aircon"
                         InputProps={{
                           ...params.InputProps,
                           type: 'search',
@@ -469,7 +494,7 @@ export default function Booking(props) {
                     type="submit" 
                     disabled={isSubmitting}
                   >
-                    Save Changes
+                    {id ? 'Save Changes' : 'Save'}
                   </Button>
                 </Col>
               </Row>

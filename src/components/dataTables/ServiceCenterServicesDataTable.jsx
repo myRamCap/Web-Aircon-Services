@@ -71,6 +71,10 @@ export default function ServiceCenterServicesDataTable(props) {
   ]
 
   const options = {
+    paging:true,
+    pageSize:10,
+    emptyRowsWhenPaging: false,
+    pageSizeOptions:[10,20],
     paginationAlignment,
     actionsColumnIndex: -1,
     searchFieldAlignment: "left",

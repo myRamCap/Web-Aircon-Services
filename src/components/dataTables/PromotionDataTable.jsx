@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function PromotionDataTable() {
-  const { user_ID } = useStateContext() 
+    const { user_ID } = useStateContext() 
     const location = useLocation()
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false)
@@ -45,6 +45,9 @@ export default function PromotionDataTable() {
       { field: "title", title: "Title" },
       { field: "content", title: "Content" },
       { field: "date_range", title: "Date Range" },
+      { field: "created_by", title: "Created By" },
+      { field: "updated_by", title: "Updated By" },
+      { field: "updated_at", title: "Date Updated" },
       { field: "created_at", title: "Date Created" }
     ];
 
@@ -75,6 +78,10 @@ export default function PromotionDataTable() {
     ]
 
     const options = {
+      paging:true,
+      pageSize:10,
+      emptyRowsWhenPaging: false,
+      pageSizeOptions:[10,20],
       paginationAlignment,
       actionsColumnIndex: -1,
       searchFieldAlignment: "left",

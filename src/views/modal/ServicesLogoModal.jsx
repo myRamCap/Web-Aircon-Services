@@ -9,8 +9,10 @@ import NoImage from '../../assets/images/No-Image.png';
 import axiosClient from '../../axios-client';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router';
+import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function ServicesLogoModal(props) {
+  const {user_ID} = useStateContext()
   const [errors, setErrors] = useState(null)
   const navigate = useNavigate() 
   const id = props.Data?.id ?? null
@@ -20,6 +22,8 @@ export default function ServicesLogoModal(props) {
     description: "",
     image: "",
     image_url: "",
+    created_by: user_ID,
+    updated_by: user_ID,
   })
 
   useEffect(() => {
@@ -139,7 +143,7 @@ export default function ServicesLogoModal(props) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row >
                 <Col xs={12} md={12}>
-                  <Button variant="success"  type="submit">Save Changes</Button>
+                  <Button variant="success"  type="submit">{id ? 'Save Changes' : 'Save'}</Button>
                 </Col>
               </Row>
             </Form.Group>

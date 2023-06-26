@@ -21,6 +21,7 @@ import Notification from "./views/pages/Notification"
 import Forgot_password from "./views/pages/Forgot_password"
 import OTP2 from "./views/otp verification/OTP2"
 import HighChart from "./views/graph/HighChart"
+import EmailSender from "./views/EmailSender"
 
 const router = createBrowserRouter([
     {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
                 element: <Workout />
             },
             {
-                path: '/vehicles',
+                path: '/airconlist',
                 element: <Vehicles />
             },
             {
@@ -121,10 +122,10 @@ const router = createBrowserRouter([
         path: '*',
         element: <NotFound />
     },
-    {
-        path: '/chart',
-        element: <HighChart />
-    }
+    // {
+    //     path: '/email',
+    //     element: <EmailSender />
+    // }
     
     
 

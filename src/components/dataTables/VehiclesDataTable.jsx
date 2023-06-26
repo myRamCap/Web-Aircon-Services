@@ -22,12 +22,13 @@ export default function VehiclesDataTable() {
       id: null,
       client_id: "",
       client_name: "",
-      vehicle_name: "",
-      chassis_number: "",
-      // contact_number: "",
+      aircon_name: "",
+      aircon_type: "",
+      client_mobile_number: "",
       make: "",
       model: "",
-      year: "",
+      horse_power: "",
+      serial_number: "",
       image: "",
       notes: "",
     }
@@ -43,11 +44,11 @@ export default function VehiclesDataTable() {
   }
 
   const columns = [
-    { field: "client_name", title: "Client Name" },
-    { field: "chassis_number", title: "Chassis Number" },
+    { field: "client_mobile_number", title: "Client Mobile #" },
+    { field: "aircon_type", title: "Aircon Type" },
     // { field: "contact_number", title: "Contact Number" },
     { field: "model", title: "Model" },
-    { field: "year", title: "Year" },
+    { field: "horse_power", title: "Horse Power" },
     { field: "created_at", title: "Date Created" },
    ];
 
@@ -66,12 +67,13 @@ export default function VehiclesDataTable() {
           id: rowData.id,
           client_id: rowData.client_id,
           client_name: rowData.client_name,
-          vehicle_name: rowData.vehicle_name,
-          chassis_number: rowData.chassis_number,
-          // contact_number: rowData.contact_number,
+          aircon_name: rowData.aircon_name,
+          aircon_type: rowData.aircon_type,
+          client_mobile_number: rowData.client_mobile_number,
           make: rowData.make,
           model: rowData.model,
-          year: rowData.year,
+          horse_power: rowData.horse_power,
+          serial_number: rowData.serial_number,
           image: rowData.image,
           notes: rowData.notes,
         })
@@ -86,6 +88,10 @@ export default function VehiclesDataTable() {
   ]
 
   const options = {
+    paging:true,
+    pageSize:10,
+    emptyRowsWhenPaging: false,
+    pageSizeOptions:[10,20],
     paginationAlignment,
     actionsColumnIndex: -1,
     searchFieldAlignment: "left",

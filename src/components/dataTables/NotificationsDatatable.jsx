@@ -46,6 +46,9 @@ export default function NotificationsDatatable() {
         { field: "title", title: "Title" },
         { field: "content", title: "Content" },
         { field: "date_range", title: "Date Range" },
+        { field: "created_by", title: "Created By" },
+        { field: "updated_by", title: "Updated By" },
+        { field: "updated_at", title: "Date Updated" },
         { field: "created_at", title: "Date Created" }
     ];
 
@@ -76,6 +79,10 @@ export default function NotificationsDatatable() {
     ]
 
     const options = {
+        paging:true,
+        pageSize:10,
+        emptyRowsWhenPaging: false,
+        pageSizeOptions:[10,20],
         paginationAlignment,
         actionsColumnIndex: -1,
         searchFieldAlignment: "left",

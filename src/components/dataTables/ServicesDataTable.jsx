@@ -5,8 +5,10 @@ import ServicesModal from '../../views/modal/ServiceModal';
 import axiosClient from '../../axios-client';
 import { useLocation } from 'react-router-dom';
 import Loading from '../loader/Loading';
+import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function ServicesDataTable() {
+  const {user_ID} = useStateContext()
   const location = useLocation()
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
@@ -19,12 +21,14 @@ export default function ServicesDataTable() {
       details: "",
       image_id: "",
       image_url: "",
+      service_center_id: "",
+      service_center: ""
     }
   ])
 
   const getServices = () => {
     setLoading(true)
-    axiosClient.get('/web/services')
+    axiosClient.get(`/web/services/${user_ID}`)
       .then(({data}) => {
         setServices(data)
         setLoading(false)
@@ -40,6 +44,8 @@ export default function ServicesDataTable() {
     },
     { field: "name", title: "Name", customSort: (a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })},
     { field: "details", title: "Details", customSort: (a, b) => a.details.localeCompare(b.details, undefined, { sensitivity: 'base' }) },
+    { field: "created_by", title: "Created By", customSort: (a, b) => a.details.localeCompare(b.details, undefined, { sensitivity: 'base' }) },
+    { field: "updated_by", title: "Updated By", customSort: (a, b) => a.details.localeCompare(b.details, undefined, { sensitivity: 'base' }) },
     { field: "created_at", title: "Date Created", customSort: (a, b) => a.created_at.localeCompare(b.created_at, undefined, { sensitivity: 'base' }) }
    ];
 
@@ -60,6 +66,8 @@ export default function ServicesDataTable() {
           details: rowData.details,
           image_id: rowData.image_id,
           image_url: rowData.image_url,
+          service_center_id: rowData.service_center_id,
+          service_center: rowData.service_center,
         })
         setShowModal(true)
       }
@@ -67,6 +75,10 @@ export default function ServicesDataTable() {
   ]
 
   const options = {
+    paging:true,
+    pageSize:10,
+    emptyRowsWhenPaging: false,
+    pageSizeOptions:[10,20],
     // loadingType: "overlay",
     paginationAlignment,
     actionsColumnIndex: -1,

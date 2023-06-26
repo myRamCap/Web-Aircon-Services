@@ -1,6 +1,6 @@
 import React from 'react'
 import '../NotFound1.css'
-import Logo from '../assets/images/Logo-RC.png'
+import Logo from '../assets/images/mangpogs.png'
 
 export default function NotFound() {
   return (

@@ -49,6 +49,10 @@ export default function UsersDataTable() {
     { title: 'Email', field: 'email' },
     { title: 'Contact Number', field: 'contact_number' },
     { title: 'Role',field: 'role_name' },
+    { title: 'Created By',field: 'created_by' },
+    { title: 'Updated By',field: 'updated_by' },
+    { title: 'Date Updated',field: 'updated_at',  render: rowData => rowData.updated_by ? rowData.updated_at : null},
+    { title: 'Date Created',field: 'created_at' },
   ]
 
   const handleAddUser = () => {
@@ -88,6 +92,10 @@ export default function UsersDataTable() {
   ]
 
   const options = {
+    paging:true,
+    pageSize:10,
+    emptyRowsWhenPaging: false,
+    pageSizeOptions:[10,20],
     paginationAlignment,
     actionsColumnIndex: -1,
     searchFieldAlignment: "left",

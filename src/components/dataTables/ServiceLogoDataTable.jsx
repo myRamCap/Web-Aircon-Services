@@ -41,7 +41,10 @@ export default function ServiceLogoDataTable() {
       },
       { field: "title", title: "Title", customSort: (a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }) },
       { field: "description", title: "Description", customSort: (a, b) => a.description.localeCompare(b.description, undefined, { sensitivity: 'base' }) },
-      { field: "created_at", title: "Date Created", customSort: (a, b) => a.created_at.localeCompare(b.created_at, undefined, { sensitivity: 'base' }) }
+      { field: "created_by", title: "Created By", customSort: (a, b) => a.description.localeCompare(b.description, undefined, { sensitivity: 'base' }) },
+      { field: "updated_by", title: "updated_by", customSort: (a, b) => a.description.localeCompare(b.description, undefined, { sensitivity: 'base' }) },
+      { field: "created_at", title: "Date Created", customSort: (a, b) => a.created_at.localeCompare(b.created_at, undefined, { sensitivity: 'base' }) },
+      { field: "updated_at", title: "Date Updated", customSort: (a, b) => a.created_at.localeCompare(b.created_at, undefined, { sensitivity: 'base' }) }
      ];
  
     const action = [
@@ -68,6 +71,10 @@ export default function ServiceLogoDataTable() {
     ]
 
     const options = {
+        paging:true,
+        pageSize:10,
+        emptyRowsWhenPaging: false,
+        pageSizeOptions:[10,20],
         paginationAlignment,
         actionsColumnIndex: -1,
         searchFieldAlignment: "left",
@@ -115,6 +122,7 @@ export default function ServiceLogoDataTable() {
     <div> 
         <MaterialTable
         title=""
+        rowsPerPageOptions={[10, 25, 50]}
         columns={columns}
         data={servicesLogo.data}
         actions={action}

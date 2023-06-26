@@ -37,7 +37,8 @@ export default function NotificationsModal(props) {
         title: "",
         content: "",
         image_url: "",
-        user_id: user_ID
+        created_by: user_ID,
+        updated_by: user_ID
     })
 
     const handleCheckbox1Change = (event) => {
@@ -124,7 +125,7 @@ export default function NotificationsModal(props) {
         //     service_center_id: newValue.id,
         //     service_center: newValue.name,
         // })
-console.log(newValue)
+ 
         setValue([
             ...fixedOptions,
             ...newValue.filter((option) => fixedOptions.indexOf(option) === -1)
@@ -452,7 +453,7 @@ console.log(newValue)
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Row >
                             <Col xs={12} md={12}>
-                                <Button variant="success" type="submit" disabled={isSubmitting} >Save Changes</Button>
+                                <Button variant="success" type="submit" disabled={isSubmitting} >{id ? 'Save Changes' : 'Save'}</Button>
                             </Col>
                         </Row>
                     </Form.Group>

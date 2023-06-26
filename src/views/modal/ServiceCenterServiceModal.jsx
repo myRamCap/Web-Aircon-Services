@@ -10,8 +10,10 @@ import Swal from 'sweetalert2'
 import { useNavigate, useParams } from 'react-router-dom';
 import NoImage from '../../assets/images/No-Image.png';
 import EstimatedTime from '../../data/JSON/refHours.json'
+import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function ServiceCenterServiceModal(props) {
+  const {user_ID} = useStateContext()
   const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState(null)
@@ -41,7 +43,7 @@ export default function ServiceCenterServiceModal(props) {
 
   const getService = async () => {
     try {
-      const response = await axiosClient.get('/web/services');
+      const response = await axiosClient.get(`/web/services/${user_ID}`);
       setServices(response.data.data);
     } catch (err) {
       console.error(err);
@@ -219,7 +221,7 @@ export default function ServiceCenterServiceModal(props) {
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    Save Changes
+                    {id ? 'Save Changes' : 'Save'}
                   </Button>
                 </Col>
               </Row>

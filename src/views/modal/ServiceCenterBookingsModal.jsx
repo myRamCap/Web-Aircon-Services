@@ -428,7 +428,7 @@ export default function ServiceCenterBookingsModal(props) {
                     type="submit" 
                     disabled={isSubmitting} 
                   >
-                    Save Changes
+                    {id ? 'Save Changes' : 'Save'}
                   </Button>
                 </Col>
               </Row>

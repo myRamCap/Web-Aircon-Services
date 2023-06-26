@@ -7,10 +7,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Swal from 'sweetalert2'
 import exportingInit from 'highcharts/modules/exporting'
+import '../../button-proceed.css'
+import { useStateContext } from '../../contexts/ContextProvider';
 
 exportingInit(Highcharts);
 
 export default function HighChart() {
+  const { user_ID } = useStateContext() 
   const [today, setToday] = useState([]);
   const [monthly, setMonthly] = useState([]);
   const [yearly, setYearly] = useState([]);
@@ -23,7 +26,7 @@ export default function HighChart() {
 
   const getReportToday= async () => {
     try {
-      const response = await axiosClient.get('/reports_today');
+      const response = await axiosClient.get(`/reports_today/${user_ID}`);
       const { data } = response;
       setToday(data);
     } catch (error) {
@@ -33,7 +36,7 @@ export default function HighChart() {
 
   const getReportMonthly= async () => {
     try {
-      const response = await axiosClient.get('/reports_monthly');
+      const response = await axiosClient.get(`/reports_monthly/${user_ID}`);
       const { data } = response;
       setMonthly(data);
     } catch (error) {
@@ -43,7 +46,7 @@ export default function HighChart() {
  
   const getReportYearly = async () => {
     try {
-      const response = await axiosClient.get('/reports_yearly');
+      const response = await axiosClient.get(`/reports_yearly/${user_ID}`);
       const { data } = response;
       setYearly(data);
     } catch (error) {
@@ -120,11 +123,11 @@ export default function HighChart() {
         })
       } else {
         if (selectedMonthStart == selectedMonthEnd) {
-          const response = await axiosClient.get(`/reports_monthly/${selectedMonthStart}/${selectedMonthYear}`);
+          const response = await axiosClient.get(`/reports_monthly/${user_ID}/${selectedMonthStart}/${selectedMonthYear}`);
           const { data } = response;
           setMonthly(data);
         } else {
-          const response = await axiosClient.get(`/reports_monthlyfilter/${selectedMonthStart}/${selectedMonthEnd}/${selectedMonthYear}`);
+          const response = await axiosClient.get(`/reports_monthlyfilter/${user_ID}/${selectedMonthStart}/${selectedMonthEnd}/${selectedMonthYear}`);
           const { data } = response;
           setMonthly(data);
         }
@@ -144,11 +147,11 @@ export default function HighChart() {
         })
       } else {
         if (selectedYearStart == selectedYearEnd) {
-          const response = await axiosClient.get(`/reports_yearly/${selectedYearStart}`);
+          const response = await axiosClient.get(`/reports_yearly/${user_ID}/${selectedYearStart}`);
           const { data } = response;
           setYearly(data);
         } else {
-          const response = await axiosClient.get(`/reports_yearlyfilter/${selectedYearStart}/${selectedYearEnd}`);
+          const response = await axiosClient.get(`/reports_yearlyfilter/${user_ID}/${selectedYearStart}/${selectedYearEnd}`);
           const { data } = response;
           setYearly(data);
         }
@@ -693,9 +696,15 @@ export default function HighChart() {
                   </Select>
                 </FormControl>
               </Col>
-              <Col xs={12} md={1}>
+              <Col xs={12} md={2}>
                 <FormControl fullWidth> 
-                  <Tooltip title="Search">
+                  <button 
+                  id='btn-proceed-1'
+                  onClick={handleMonthlySearch}
+                  >
+                    Proceed
+                  </button>
+                  {/* <Tooltip title="Search">
                     <IconButton
                       onClick={handleMonthlySearch}
                       className='search-icon'  
@@ -707,7 +716,7 @@ export default function HighChart() {
                       }}>
                           <SearchIcon />
                     </IconButton>
-                  </Tooltip>
+                  </Tooltip> */}
                 </FormControl>
               </Col>
             </Row>
@@ -740,9 +749,9 @@ export default function HighChart() {
                   </Select>
                 </FormControl>
               </Col>
-              <Col xs={12} md={1}>
-                <FormControl fullWidth> 
-                  <Tooltip title="Search">
+              <Col xs={12} md={2}>
+                <FormControl > 
+                  {/* <Tooltip title="Search">
                     <IconButton
                       onClick={handleYearlySearch}
                       className='search-icon'  
@@ -754,7 +763,13 @@ export default function HighChart() {
                       }}>
                           <SearchIcon />
                     </IconButton>
-                  </Tooltip>
+                  </Tooltip> */}
+                  <button 
+                  id='btn-proceed'
+                  onClick={handleYearlySearch}
+                  >
+                    Proceed
+                  </button>
                 </FormControl>
               </Col>
             </Row>

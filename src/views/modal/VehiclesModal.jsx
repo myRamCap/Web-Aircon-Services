@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import Customer from '../../data/JSON/dummy/refCustomer.json' 
+import ACType from '../../data/JSON/refACType.json' 
+import ACHP from '../../data/JSON/refHP.json' 
 import { Autocomplete, Card, CardMedia, TextField } from '@mui/material';
 import NoImage from '../../assets/images/No-Image.png';
 import { VoiceChatOutlined } from '@mui/icons-material';
@@ -14,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function VehicleModal(props) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [image, setImage] = useState('')
   const navigate = useNavigate()
   const [errors, setErrors] = useState(null)
@@ -22,13 +24,13 @@ export default function VehicleModal(props) {
   const [vehicle, setVehicle] = useState({
     id: null,
     client_id: "",
-    client_name: "",
-    vehicle_name: "",
-    chassis_number: "",
-    // contact_number: "",
+    client_mobile_number: "",
+    aircon_name: "",
+    aircon_type: "",
     make: "",
     model: "",
-    year: "",
+    horse_power: "",
+    serial_number: "",
     image: "",
     notes: "",
   })
@@ -43,8 +45,8 @@ export default function VehicleModal(props) {
     }
   }
 
-  const optionsCustomer = clients.map((option) => {
-    const firstLetter = option.fullname[0].toUpperCase();
+  const optionsCustomer = ACType.RECORDS.map((option) => {
+    const firstLetter = option.name[0].toUpperCase();
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
       ...option,
@@ -53,6 +55,7 @@ export default function VehicleModal(props) {
 
   const onSubmit = async (ev) => {
       ev.preventDefault()
+      setIsSubmitting(true);
       const payload = {...vehicle}
 
       try {
@@ -67,7 +70,8 @@ export default function VehicleModal(props) {
             ? 'Your data has been successfully updated!'
             : 'Your data has been successfully saved!',
         }).then(() => {
-          navigate('/vehicles', { state: 'success' });
+          setIsSubmitting(false);
+          navigate('/airconlist', { state: 'success' });
         });
       } catch (err) {
         const response = err.response;
@@ -77,11 +81,25 @@ export default function VehicleModal(props) {
       }
   }
 
-  const handleChangeCustomer = (event, newValue) => {
+  const handleChangeCustomer = (event, newValue) => { 
     setVehicle({
       ...vehicle,
       client_id: newValue.id,
-      client_name: newValue.fullname,
+      client_mobile_number: newValue.contact_number,
+    }) 
+  }
+
+  const handleChangeAC = (event, newValue) => { 
+    setVehicle({
+      ...vehicle,
+      aircon_type: newValue.name,
+    }) 
+  }
+
+  const handleChangeHP = (event, newValue) => { 
+    setVehicle({
+      ...vehicle,
+      horse_power: newValue.hp,
     }) 
   }
 
@@ -103,13 +121,14 @@ export default function VehicleModal(props) {
         ...vehicle,
         id: props.Data.id,
         client_id: props.Data.client_id,
-        client_name: props.Data.client_name,
-        vehicle_name: props.Data.vehicle_name,
-        chassis_number: props.Data.chassis_number,
+        client_mobile_number: props.Data.client_mobile_number,
+        aircon_name: props.Data.aircon_name,
+        aircon_type: props.Data.aircon_type,
         // contact_number: props.Data.contact_number,
         make: props.Data.make,
         model: props.Data.model,
-        year: props.Data.year,
+        horse_power: props.Data.horse_power,
+        serial_number: props.Data.serial_number,
         image: props.Data.image,
         notes: props.Data.notes,
       })
@@ -123,13 +142,13 @@ export default function VehicleModal(props) {
         ...vehicle,
         id: null,
         client_id: "",
-        client_name: "",
-        vehicle_name: "",
-        chassis_number: "",
-        // contact_number: "",
+        client_mobile_number: "",
+        aircon_name: "",
+        aircon_type: "",
         make: "",
         model: "",
-        year: "",
+        horse_power: "",
+        serial_number: "",
         image: "",
         notes: "",
       })
@@ -141,7 +160,7 @@ export default function VehicleModal(props) {
     <div id="VehicleModal">
         <Modal show={props.show} onHide={props.close} backdrop="static" size="lg">
             <Modal.Header closeButton>
-              <Modal.Title>{id ? 'Edit Vehicle' : 'Add Vehicle'}</Modal.Title>
+              <Modal.Title>{id ? 'Edit Aircon' : 'Add Aircon'}</Modal.Title>
             </Modal.Header>
             <Modal.Body className="modal-main">
             {errors && 
@@ -157,15 +176,15 @@ export default function VehicleModal(props) {
                 <Col xs={12} md={6}>
                   <Autocomplete
                     disableClearable
-                    value={ vehicle.client_name}
-                    options={optionsCustomer.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
+                    value={ vehicle.client_mobile_number}
+                    options={clients}
                     onChange={handleChangeCustomer}
-                    getOptionLabel={(options) => options.fullname ? options.fullname.toString() : vehicle.client_name}
-                    isOptionEqualToValue={(option, value) => option.fullname ?? "" === vehicle.client_name}
+                    getOptionLabel={(options) => options.contact_number ? options.contact_number.toString() : vehicle.client_mobile_number}
+                    isOptionEqualToValue={(option, value) => option.contact_number ?? "" === vehicle.client_mobile_number}
                     renderInput={(params) => (
                         <TextField
                         {...params}
-                        label="Client Name"
+                        label="Mobile Number"
                         InputProps={{
                             ...params.InputProps,
                             type: 'search',
@@ -177,10 +196,10 @@ export default function VehicleModal(props) {
                 <Col xs={12} md={6}>
                     <TextField 
                       type="text" 
-                      value={vehicle.vehicle_name} 
-                      onChange={ev => setVehicle({...vehicle, vehicle_name: ev.target.value})} 
-                      id="vehicle_name" 
-                      label="Vehicle Name" 
+                      value={vehicle.aircon_name} 
+                      onChange={ev => setVehicle({...vehicle, aircon_name: ev.target.value})} 
+                      id="aircon_name" 
+                      label="Aircon Name / Location" 
                       variant="outlined" 
                       fullWidth
                     />
@@ -190,14 +209,23 @@ export default function VehicleModal(props) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row>
               <Col xs={12} md={6}>
-                    <TextField 
-                      type="text" 
-                      value={vehicle.chassis_number} 
-                      onChange={ev => setVehicle({...vehicle, chassis_number: ev.target.value})} 
-                      id="chassis_number" 
-                      label="Chassis Number" 
-                      variant="outlined" 
-                      fullWidth
+                    <Autocomplete
+                      disableClearable
+                      value={ vehicle.aircon_type}
+                      options={optionsCustomer}
+                      onChange={handleChangeAC}
+                      getOptionLabel={(options) => options.name ? options.name.toString() : vehicle.aircon_type}
+                      isOptionEqualToValue={(option, value) => option.name ?? "" === vehicle.aircon_type}
+                      renderInput={(params) => (
+                          <TextField
+                          {...params}
+                          label="Aircon Type"
+                          InputProps={{
+                              ...params.InputProps,
+                              type: 'search',
+                          }}
+                          />
+                      )}
                     />
                 </Col>
                 <Col xs={12} md={6}>
@@ -227,31 +255,39 @@ export default function VehicleModal(props) {
                     />
                 </Col>
                 <Col xs={12} md={6}>
-                    <TextField 
-                      type="text" 
-                      value={vehicle.year} 
-                      onChange={ev => setVehicle({...vehicle, year: ev.target.value})} 
-                      id="year" 
-                      label="Year" 
-                      variant="outlined" 
-                      fullWidth
+                    <Autocomplete
+                      disableClearable
+                      value={ vehicle.horse_power}
+                      options={ACHP.RECORDS}
+                      onChange={handleChangeHP}
+                      getOptionLabel={(options) => options.hp ? options.hp.toString() : vehicle.horse_power}
+                      isOptionEqualToValue={(option, value) => option.hp ?? "" === vehicle.horse_power}
+                      renderInput={(params) => (
+                          <TextField
+                          {...params}
+                          label="Horse Power"
+                          InputProps={{
+                              ...params.InputProps,
+                              type: 'search',
+                          }}
+                          />
+                      )}
                     />
                 </Col>
               </Row>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row>
-              {/* <Col xs={12} md={6}>
+              <Col xs={12} md={6}>
                     <TextField 
                       type="text" 
-                      value={vehicle.contact_number} 
-                      onChange={ev => setVehicle({...vehicle, contact_number: ev.target.value})} 
-                      id="contact_number" 
-                      label="Contact Number" 
+                      value={vehicle.serial_number} 
+                      onChange={ev => setVehicle({...vehicle, serial_number: ev.target.value})} 
+                      label="Serial Number" 
                       variant="outlined" 
                       fullWidth
                     />
-                </Col> */}
+                </Col>
                 <Col xs={12} md={6}>
                     <TextField 
                       type="text" 
@@ -293,7 +329,7 @@ export default function VehicleModal(props) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row >
                 <Col xs={12} md={6}>
-                  <Button variant="success"  type="submit">Create Vehicle</Button>
+                  <Button variant="success"  type="submit" disabled={isSubmitting}>{id ? 'Save Changes' : 'Save'}</Button>
                 </Col>
               </Row>
             </Form.Group>

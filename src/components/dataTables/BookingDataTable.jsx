@@ -21,9 +21,9 @@ export default function BookingDataTable() {
     {
       id: null,
       client_id: "",
-      client_name: "",
-      vehicle_id: "",
-      vehicle_name: "",
+      contact_number: "",
+      aircon_id: "",
+      aircon_name: "",
       services_id: "",
       service: "",
       service_center_id: "",
@@ -68,7 +68,7 @@ export default function BookingDataTable() {
 
   const columns = [
     { field: "reference_number", title: "Reference #" },
-    { field: "client_name", title: "Client Name" },
+    { field: "contact_number", title: "Mobile Number" },
     { field: "service", title: "Service" },
     { field: "service_center", title: "Service Center" },
     // { field: "contact_number", title: "Contact Number" },
@@ -109,9 +109,9 @@ export default function BookingDataTable() {
           ...bookingInfo,
           id: rowData.id,
           client_id: rowData.client_id,
-          client_name: rowData.client_name,
-          vehicle_id: rowData.vehicle_id,
-          vehicle_name: rowData.vehicle_name,
+          contact_number: rowData.contact_number,
+          aircon_id: rowData.aircon_id,
+          aircon_name: rowData.aircon_name,
           services_id: rowData.services_id,
           service: rowData.service,
           service_center_id: rowData.service_center_id,
@@ -137,6 +137,10 @@ export default function BookingDataTable() {
  
 
   const options = {
+    paging:true,
+    pageSize:10,
+    emptyRowsWhenPaging: false,
+    pageSizeOptions:[10,20],
     paginationAlignment,
     actionsColumnIndex: -1,
     searchFieldAlignment: "left",

@@ -30,7 +30,7 @@ body {
 }
 
 .sidebar.active {
-    width: 255px;
+    width: 270px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -177,7 +177,7 @@ body {
 
 
 .sidebar.active ~ .home_content {
-  margin-left: 15em;
+  margin-left: 17em;
 }
 
 #modal .alert {

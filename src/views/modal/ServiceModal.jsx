@@ -9,25 +9,42 @@ import NoImage from '../../assets/images/No-Image.png';
 import axiosClient from '../../axios-client';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
+import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function ServicesModal(props) {
+  const {user_ID, role} = useStateContext()
   const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState(null)
   const id = props.Data?.id ?? null;
   const [serviceLogo, setServiceLogo] = useState([])
+  const [servicecenter, setServiceCenter] = useState([])
   const [service, setService] = useState({
     id: null,
     name: "",
     details: "",
+    service_center_id: "",
+    service_center: "",
     image_id: "",
     image_url: "",
+    created_by: user_ID,
+    updated_by: user_ID,
   })
  
   const getServiceLogo = async () => {
     try {
       const response = await axiosClient.get('/web/serviceslogo');
       setServiceLogo(response.data.data);
+    } catch (err) {
+      console.error(err);
+      // Handle error as needed
+    }
+  }
+
+  const getServiceCenter = async () => {
+    try {
+      const response = await axiosClient.get(`/web/servicecenter/${user_ID}`);
+      setServiceCenter(response.data.data);
     } catch (err) {
       console.error(err);
       // Handle error as needed
@@ -71,9 +88,18 @@ export default function ServicesModal(props) {
       image_url: newValue.image_url,
     })
   }
+  
+  const handleChangeSC = (event, newValue) => {
+    setService({
+      ...service,
+      service_center_id: newValue.id,
+      service_center: newValue.name
+    })
+  }
 
   useEffect(() => {
     if (id) { 
+      console.log(props.Data)
       setService({
         ...service,
         id: props.Data.id,
@@ -81,12 +107,15 @@ export default function ServicesModal(props) {
         details: props.Data.details,
         image_id: props.Data.image_id,
         image_url: props.Data.image_url,
+        service_center_id: props.Data.service_center_id,
+        service_center: props.Data.service_center,
       })
     }
   }, [id])
 
   useEffect(() => {
     getServiceLogo()
+    getServiceCenter()
     if (props.show == false) {
       setService({
         ...service,
@@ -95,6 +124,8 @@ export default function ServicesModal(props) {
         details: "",
         image_id: "",
         image_url: "",
+        service_center_id: "",
+        service_center: "",
       })
       setErrors(null)
     }
@@ -138,7 +169,7 @@ export default function ServicesModal(props) {
                         )}
                         />
                     </Col>
-                    <Col xs={12} md={12} className="mt-5">
+                    <Col xs={12} md={12} className="mt-3">
                         <TextField 
                           type="text" 
                           value={service.details} 
@@ -147,6 +178,29 @@ export default function ServicesModal(props) {
                           variant="outlined" 
                           fullWidth
                         />
+                    </Col>
+                    <Col xs={12} md={12} className="mt-3 ">
+                      { role == 2 &&
+                        <Autocomplete
+                          disableClearable
+                          value={service.service_center}
+                          options={servicecenter}
+                          onChange={handleChangeSC}
+                          getOptionLabel={(options) => options.name ? options.name.toString() : service.service_center}
+                          isOptionEqualToValue={(option, value) => option.name ?? "" === service.service_center}
+                          renderInput={(params) => (
+                              <TextField
+                              {...params}
+                              label="Service Center"
+                              InputProps={{
+                                  ...params.InputProps,
+                                  type: 'search',
+                              }}
+                              />
+                          )}
+                        />
+                      }
+                      
                     </Col>
                 </Col>
 
@@ -166,7 +220,7 @@ export default function ServicesModal(props) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row >
                 <Col xs={12} md={12}>
-                  <Button variant="success"  type="submit" disabled={isSubmitting}>Save Changes</Button>
+                  <Button variant="success"  type="submit" disabled={isSubmitting}>{id ? 'Save Changes' : 'Save'}</Button>
                 </Col>
               </Row>
             </Form.Group>

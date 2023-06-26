@@ -36,7 +36,8 @@ export default function PromotionModal(props) {
       title: "",
       content: "",
       image_url: "",
-      user_id: user_ID
+      created_by: user_ID,
+      updated_by: user_ID,
     })
 
     const getClient = async () => {
@@ -258,10 +259,10 @@ export default function PromotionModal(props) {
                     disabled={!checkbox2Checked}
                     multiple
                     value={value}
-                    onChange={handleChangeClient} 
+                    onChange={handleChangeClient } 
                     options={client}
-                    getOptionLabel={(option) => option.fullname}
-                    isOptionEqualToValue={(option, value) => option.fullname === value.fullname}
+                    getOptionLabel={(option) => option.contact_number}
+                    isOptionEqualToValue={(option, value) => option.contact_number === value.contact_number}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -351,7 +352,7 @@ export default function PromotionModal(props) {
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Row >
               <Col xs={12} md={12}>
-                <Button variant="success"  type="submit" disabled={isSubmitting}>Save Changes</Button>
+                <Button variant="success"  type="submit" disabled={isSubmitting}>{id ? 'Save Changes' : 'Save'}</Button>
               </Col>
             </Row>
           </Form.Group>
