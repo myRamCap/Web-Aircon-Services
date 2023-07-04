@@ -167,6 +167,21 @@ export default function Navbar() {
             { role == 1 || role == 2 || role == 3 ? 
                 ( 
                     <li>
+                        <Link className={splitLocation[1] === "servicecost" ? "isActive" : ""} to="/servicecost">
+                            <i>
+                            <box-icon name='purchase-tag-alt' type='solid' color={splitLocation[1] === "servicecost" ? 'white' : ''} />
+                            {/* <box-icon name='party'  /> */}
+                            </i>
+                            
+                            <span className="link_name">Service Cost</span>
+                        </Link>
+                        <span className="tooltip">Service Cost</span>
+                    </li>
+                ) : null
+            }
+            { role == 1 || role == 2 || role == 3 ? 
+                ( 
+                    <li>
                         <Link className={splitLocation[1] === "users" ? "isActive" : ""} to="/users">
                             <i>
                                 <box-icon name='user-circle' color={splitLocation[1] === "users" ? 'white' : ''} />

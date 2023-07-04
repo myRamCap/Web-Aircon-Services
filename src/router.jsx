@@ -1,11 +1,8 @@
 import {createBrowserRouter, Navigate} from "react-router-dom"
 import DefaultLayout from "./components/DefaultLayout"
-import ChangePassword from "./views/authentication/ChangePassword"
 import Login from "./views/authentication/Login"
-import Dashboard from "./views/pages/Dashboard"
 import OTP from "./views/otp verification/OTP"
 import Workout from "./views/pages/Services"
-import Vehicles from "./views/pages/Vehicles"
 import ServiceCenter from "./views/pages/ServiceCenter"
 import Bookings from "./views/pages/Bookings"
 import Promotions from "./views/pages/Promotions"
@@ -21,7 +18,8 @@ import Notification from "./views/pages/Notification"
 import Forgot_password from "./views/pages/Forgot_password"
 import OTP2 from "./views/otp verification/OTP2"
 import HighChart from "./views/graph/HighChart"
-import EmailSender from "./views/EmailSender"
+import AirconList from "./views/pages/AirconList"
+import ServiceCost from "./views/pages/ServiceCost"
 
 const router = createBrowserRouter([
     {
@@ -42,7 +40,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/airconlist',
-                element: <Vehicles />
+                element: <AirconList />
             },
             {
                 path: '/servicecenter',
@@ -75,6 +73,10 @@ const router = createBrowserRouter([
             {
                 path: '/serviceslogo',
                 element: <ServiceLogo />
+            },
+            {
+                path: '/servicecost',
+                element: <ServiceCost />
             } 
             
         ]

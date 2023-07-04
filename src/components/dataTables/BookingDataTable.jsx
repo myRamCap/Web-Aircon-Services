@@ -68,6 +68,7 @@ export default function BookingDataTable() {
 
   const columns = [
     { field: "reference_number", title: "Reference #" },
+    { field: "client_name", title: "CLient Name" },
     { field: "contact_number", title: "Mobile Number" },
     { field: "service", title: "Service" },
     { field: "service_center", title: "Service Center" },
@@ -89,8 +90,13 @@ export default function BookingDataTable() {
         });
       },
     },
+    { field: "tech_id", title: "Tech ID" },
     { field: "updated_by", title: "Updated by" },
-    { field: "updated_at", title: "Date Updated" },
+    {
+      field: "updated_at",
+      title: "Date Updated",
+      render: (rowData) => rowData.updated_by ? rowData.updated_at : null,
+    },
     { field: "created_at", title: "Date Created" },
    ];
  
@@ -101,31 +107,33 @@ export default function BookingDataTable() {
       isFreeAction: true,
       onClick: (event) => setShowModal(true)
     },
-    {
-      icon: () => <div className="btn btn-success btn-sm"><EditIcon  /></div> ,
-      tooltip: 'Edit',
-      onClick: (event,rowData) => {
-        setBookingInfo({
-          ...bookingInfo,
-          id: rowData.id,
-          client_id: rowData.client_id,
-          contact_number: rowData.contact_number,
-          aircon_id: rowData.aircon_id,
-          aircon_name: rowData.aircon_name,
-          services_id: rowData.services_id,
-          service: rowData.service,
-          service_center_id: rowData.service_center_id,
-          service_center: rowData.service_center,
-          estimated_time: rowData.estimated_time,
-          // contact_number: rowData.contact_number,
-          status: rowData.status,
-          booking_date: rowData.booking_date,
-          time: rowData.time,
-          estimated_time_desc: rowData.estimated_time_desc,
-          notes: rowData.notes,
-        })
-        setShowModal(true)
-      },
+    (rowData) => {
+      return {
+        icon: () => <div className="btn btn-success btn-sm"><EditIcon  /></div> ,
+        tooltip: 'Edit',
+        hidden: rowData.status === "Completed",
+        onClick: (event,rowData) => {
+          setBookingInfo({
+            ...bookingInfo,
+            id: rowData.id,
+            client_id: rowData.client_id,
+            contact_number: rowData.contact_number,
+            aircon_id: rowData.aircon_id,
+            aircon_name: rowData.aircon_name,
+            services_id: rowData.services_id,
+            service: rowData.service,
+            service_center_id: rowData.service_center_id,
+            service_center: rowData.service_center,
+            estimated_time: rowData.estimated_time,
+            status: rowData.status,
+            booking_date: rowData.booking_date,
+            time: rowData.time,
+            estimated_time_desc: rowData.estimated_time_desc,
+            notes: rowData.notes,
+          })
+          setShowModal(true)
+        },
+      };
     }
   
     // {

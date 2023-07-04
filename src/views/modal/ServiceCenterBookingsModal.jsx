@@ -16,11 +16,11 @@ import dayjs from 'dayjs';
 export default function ServiceCenterBookingsModal(props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState(null)
-  const [disabledVehicle, setDisabledVehicle] = useState(true)
+  const [disabledAircon, setDisabledAircon] = useState(true)
   const [disabledTime, setDisabledTime] = useState(true)
   const [services, setServices] = useState([])
   const [timeSlot, setTimeSlot] = useState([])
-  const [vehicle, setVehicle] = useState([])
+  const [aircon, setAircon] = useState([])
   const [clients, setClients] = useState([])
   const navigate = useNavigate()
   const param = useParams()
@@ -29,8 +29,8 @@ export default function ServiceCenterBookingsModal(props) {
     id: null,
     client_id: "",
     client_name: "",
-    vehicle_id: "",
-    vehicle_name: "",
+    aircon_id: "",
+    aircon_name: "",
     services_id: "",
     service: "",
     estimated_time: "",
@@ -62,19 +62,19 @@ export default function ServiceCenterBookingsModal(props) {
   }
 
   const handleChangeCustomer = async (event, newValue) => {
-    setDisabledVehicle(true)
+    setDisabledAircon(true)
     setBooking({
       ...booking,
       client_id: newValue.id,
       client_name: newValue.fullname,
-      vehicle_name: "",
-      vehicle_id: "",
+      aircon_name: "",
+      aircon_id: "",
     })
 
     try {
-      const response = await axiosClient.get(`/web/service_center/vehicle/${newValue.id}`);
-      setVehicle(response.data);
-      setDisabledVehicle(false);
+      const response = await axiosClient.get(`/web/service_center/aircon/${newValue.id}`);
+      setAircon(response.data);
+      setDisabledAircon(false);
     } catch (error) {
       // Handle error if needed
     }
@@ -119,12 +119,12 @@ export default function ServiceCenterBookingsModal(props) {
     })
   }
 
-  const handleChangeVehicle = (event, newValue) => {
+  const handleChangeAircon = (event, newValue) => {
     console.log(newValue)
     setBooking({
       ...booking,
-      vehicle_id: newValue.id,
-      vehicle_name: newValue.vehicle_name,
+      aircon_id: newValue.id,
+      aircon_name: newValue.aircon_name,
     })
   }
 
@@ -205,8 +205,8 @@ export default function ServiceCenterBookingsModal(props) {
         id: props.Data.id,
         client_id: props.Data.client_id,
         client_name: props.Data.client_name,
-        vehicle_id: props.Data.vehicle_id,
-        vehicle_name: props.Data.vehicle_name,
+        aircon_id: props.Data.aircon_id,
+        aircon_name: props.Data.aircon_name,
         services_id: props.Data.services_id,
         service: props.Data.service,
         estimated_time: props.Data.estimated_time,
@@ -218,7 +218,7 @@ export default function ServiceCenterBookingsModal(props) {
         notes: props.Data.notes,
       })
       setDisabledTime(false)
-      setDisabledVehicle(false)
+      setDisabledAircon(false)
     }
   }, [id])
 
@@ -231,8 +231,8 @@ export default function ServiceCenterBookingsModal(props) {
         id: null,
         client_id: "",
         client_name: "",
-        vehicle_id: "",
-        vehicle_name: "",
+        aircon_id: "",
+        aircon_name: "",
         services_id: "",
         service: "",
         estimated_time: "",
@@ -351,18 +351,18 @@ export default function ServiceCenterBookingsModal(props) {
               <Row>
                 <Col xs={12} md={6}>
                   <Autocomplete
-                    id="vehicle"
+                    id="aircon"
                     disableClearable
-                    disabled={disabledVehicle}
-                    value={booking.vehicle_name}
-                    onChange={handleChangeVehicle}
-                    options={vehicle.data || []}
-                    getOptionLabel={(options) => options.vehicle_name ? options.vehicle_name.toString() : booking.vehicle_name} 
-                    isOptionEqualToValue={(option, value) => option.vehicle_name ?? null === booking.vehicle_name}
+                    disabled={disabledAircon}
+                    value={booking.aircon_name}
+                    onChange={handleChangeAircon}
+                    options={aircon.data || []}
+                    getOptionLabel={(options) => options.aircon_name ? options.aircon_name.toString() : booking.aircon_name} 
+                    isOptionEqualToValue={(option, value) => option.aircon_name ?? null === booking.aircon_name}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label="Vehicle"
+                        label="Aircon"
                         InputProps={{
                           ...params.InputProps,
                           type: 'search',

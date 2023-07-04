@@ -6,6 +6,8 @@ import Loading from '../loader/Loading';
 import axiosClient from '../../axios-client';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { useLocation } from 'react-router-dom';
+import { Delete } from '@mui/icons-material';
+import Swal from 'sweetalert2'
 
 export default function UsersDataTable() {
   const [showModal, setShowModal] = useState(false)
@@ -43,22 +45,11 @@ export default function UsersDataTable() {
       setLoading(false);
     }
   }
-  
-  const columns = [
-    { title: 'Name', field: 'fullname' },
-    { title: 'Email', field: 'email' },
-    { title: 'Contact Number', field: 'contact_number' },
-    { title: 'Role',field: 'role_name' },
-    { title: 'Created By',field: 'created_by' },
-    { title: 'Updated By',field: 'updated_by' },
-    { title: 'Date Updated',field: 'updated_at',  render: rowData => rowData.updated_by ? rowData.updated_at : null},
-    { title: 'Date Created',field: 'created_at' },
-  ]
 
   const handleAddUser = () => {
     setShowModal(true);
   };
-  
+
   const handleEditUser = (event,rowData) => {
     setUserInfo({
       id: rowData.id,
@@ -78,6 +69,39 @@ export default function UsersDataTable() {
     setShowModal(true);
   };
 
+  const handleDelUser = (event,rowData) => {
+    console.log(rowData)
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+  }
+  
+  const columns = [
+    { title: 'Tech Ref ID', field: 'tech_ref_id' },
+    { title: 'Name', field: 'fullname' },
+    { title: 'Email', field: 'email' },
+    { title: 'Contact Number', field: 'contact_number' },
+    { title: 'Role',field: 'role_name' },
+    { title: 'Created By',field: 'created_by' },
+    { title: 'Updated By',field: 'updated_by' },
+    { title: 'Date Updated',field: 'updated_at',  render: rowData => rowData.updated_by ? rowData.updated_at : null},
+    { title: 'Date Created',field: 'created_at' },
+  ]
+
    const action = [
     {
       icon: () => <div className="btn btn-primary">Add New</div> ,
@@ -88,7 +112,16 @@ export default function UsersDataTable() {
       icon: () => <div className="btn btn-success btn-sm"><EditIcon  /></div> ,
       tooltip: 'Edit',
       onClick: handleEditUser,
-    }
+    },
+    (rowData) => {
+      return {
+        icon: () => <div className="btn btn-danger btn-sm"><Delete  /></div> ,
+        tooltip: "Delete",
+        // disabled: rowData.role_name === "Technician",
+        hidden: rowData.role_name != "Technician",
+        onClick: handleDelUser
+      };
+    } 
   ]
 
   const options = {

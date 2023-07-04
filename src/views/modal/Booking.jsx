@@ -18,14 +18,14 @@ export default function Booking(props) {
   const {user_ID} = useStateContext()
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState(null)
-  const [disabledVehicle, setDisabledVehicle] = useState(true)
+  const [disabledAircon, setDisabledAircon] = useState(true)
   const [disabledTime, setDisabledTime] = useState(true)
   const id = props.Data?.id ?? null
   const navigate = useNavigate()
   const [operation, setOperation] = useState([])
   const [services, setServices] = useState([])
   const [timeSlot, setTimeSlot] = useState([])
-  const [vehicle, setVehicle] = useState([])
+  const [aircon, setAircon] = useState([])
   const [clients, setClients] = useState([])
   const [booking, setBooking] = useState({
     id: null,
@@ -99,8 +99,8 @@ export default function Booking(props) {
   }
 
   const handleChangeClient = async (event, newValue) => {
-    setDisabledVehicle(true)
-    setVehicle([])
+    setDisabledAircon(true)
+    setAircon([])
     setBooking({
       ...booking,
       client_id: newValue.id,
@@ -110,9 +110,9 @@ export default function Booking(props) {
     })
 
     try {
-      const {data} = await axiosClient.get(`/web/service_center/vehicle/${newValue.id}`)
-      setVehicle(data)
-      setDisabledVehicle(false)
+      const {data} = await axiosClient.get(`/web/service_center/aircon/${newValue.id}`)
+      setAircon(data)
+      setDisabledAircon(false)
     } catch (error) {
 
     }
@@ -157,7 +157,7 @@ export default function Booking(props) {
     })
   }
 
-  const handleChangeVehicle = (event, newValue) => {
+  const handleChangeAircon = (event, newValue) => {
     console.log(newValue)
     setBooking({
       ...booking,
@@ -269,7 +269,7 @@ export default function Booking(props) {
         updated_by: user_ID,
       })
       setDisabledTime(false)
-      setDisabledVehicle(false)
+      setDisabledAircon(false)
     } 
 
   }, [id])
@@ -311,7 +311,7 @@ export default function Booking(props) {
   const isWeekend = (date) => {
     const day = new Date(date).getDay();
     const daysOff = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-  return operation[daysOff[day]] === 0;
+    return operation[daysOff[day]] === 0;
   };
 
   return (
@@ -417,12 +417,12 @@ export default function Booking(props) {
               <Row>
                 <Col xs={12} md={6}>
                   <Autocomplete
-                    id="vehicle"
+                    id="aircon"
                     disableClearable
-                    disabled={disabledVehicle}
+                    disabled={disabledAircon}
                     value={booking.aircon_name}
-                    onChange={handleChangeVehicle}
-                    options={vehicle.data || []}
+                    onChange={handleChangeAircon}
+                    options={aircon.data || []}
                     getOptionLabel={(options) => options.aircon_name ? options.aircon_name.toString() : booking.aircon_name} 
                     isOptionEqualToValue={(option, value) => option.aircon_name ?? null === booking.aircon_name}
                     renderInput={(params) => (
