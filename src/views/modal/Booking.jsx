@@ -213,8 +213,8 @@ export default function Booking(props) {
 
     try {
       const response = id
-      ? await axiosClient.put(`/web/booking/${id}`, payload)
-      : await axiosClient.post('/web/booking', payload);
+      ? await axiosClient.put(`/web/bookings/${id}`, payload)
+      : await axiosClient.post('/web/bookings', payload);
       response
       Swal.fire({
         icon: 'success',

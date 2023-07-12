@@ -58,8 +58,8 @@ export default function ServiceCenterServiceModal(props) {
 
       try {
         const response = id
-          ? await axiosClient.put(`/web/service_center/services/${id}`, payload)
-          : await axiosClient.post('/web/service_center/services', payload);
+          ? await axiosClient.put(`/web/service_center/service/${id}`, payload)
+          : await axiosClient.post('/web/service_center/service', payload);
         response
         Swal.fire({
           icon: 'success',

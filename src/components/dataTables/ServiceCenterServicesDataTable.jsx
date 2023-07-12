@@ -29,7 +29,7 @@ export default function ServiceCenterServicesDataTable(props) {
 
   const getServiceCenterServices = () => {
     setLoading(true)
-    axiosClient.get(`/web/service_center/services/${param.id}`)
+    axiosClient.get(`/web/service_center/service/${param.id}`)
     .then(({data}) => {
       setServiceCenterServices(data)
       setLoading(false)

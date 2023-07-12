@@ -45,7 +45,7 @@ export default function ServiceCenterBookingsModal(props) {
  
   const getServices = async () => {
     try {
-      const response = await axiosClient.get(`/web/service_center/services/${param.id}`);
+      const response = await axiosClient.get(`/web/service_center/service/${param.id}`);
       setServices(response.data.data);
     } catch (error) {
       // Handle error if needed

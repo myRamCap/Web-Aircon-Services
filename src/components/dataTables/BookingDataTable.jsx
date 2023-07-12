@@ -55,7 +55,7 @@ export default function BookingDataTable() {
     setLoading(true);
 
     try {
-      const response = await axiosClient.get(`/web/booking/${user_ID}`);
+      const response = await axiosClient.get(`/web/bookings/${user_ID}`);
       const { data } = response;
       setBooking(data);
     } catch (error) {

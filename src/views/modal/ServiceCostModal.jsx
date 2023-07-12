@@ -45,7 +45,7 @@ export default function ServiceCostModal(props) {
         setIsSubmitting(true);
         const payload = {...cost}
 
-        try {
+        try { 
           const response = id
             ? await axiosClient.put(`/web/servicecost/${id}`, payload)
             : await axiosClient.post('/web/servicecost', payload);
@@ -75,7 +75,7 @@ export default function ServiceCostModal(props) {
         })
 
         try {
-            const response = await axiosClient.get(`/web/service_center/services/${newValue.id}`);
+            const response = await axiosClient.get(`/web/service_center/service/${newValue.id}`);
             setServices(response.data.data);
         } catch (err) {
             // console.error(err);
