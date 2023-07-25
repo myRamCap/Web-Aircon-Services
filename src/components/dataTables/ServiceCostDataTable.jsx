@@ -78,9 +78,9 @@ export default function ServiceCostDataTable() {
         // filtering: true, 
         exportButton: true,
         paging:true,
-        pageSize:10,
+        pageSize:5,
         emptyRowsWhenPaging: false,
-        pageSizeOptions:[10,20],
+        pageSizeOptions:[5,10],
         paginationAlignment: "center",
         actionsColumnIndex: -1,
         searchFieldAlignment: "left",
@@ -116,7 +116,7 @@ export default function ServiceCostDataTable() {
     useEffect(() => {
         getServiceCost()
         if (location.state == 'success'){
-        //   setBookingInfo([])
+          setCostInfo([])
           getServiceCost()
           setShowModal(false)
           location.state = null

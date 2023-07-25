@@ -81,9 +81,12 @@ export default function UsersDataTable() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
+        console.log(rowData.id)
+        axiosClient.post(`/tech/delete_account/${rowData.id}`);
+      
         Swal.fire(
           'Deleted!',
-          'Your file has been deleted.',
+          'user has been deleted.',
           'success'
         )
       }
@@ -96,6 +99,7 @@ export default function UsersDataTable() {
     { title: 'Email', field: 'email' },
     { title: 'Contact Number', field: 'contact_number' },
     { title: 'Role',field: 'role_name' },
+    { title: 'Status',field: 'status' },
     { title: 'Created By',field: 'created_by' },
     { title: 'Updated By',field: 'updated_by' },
     { title: 'Date Updated',field: 'updated_at',  render: rowData => rowData.updated_by ? rowData.updated_at : null},
@@ -126,9 +130,9 @@ export default function UsersDataTable() {
 
   const options = {
     paging:true,
-    pageSize:10,
+    pageSize:5,
     emptyRowsWhenPaging: false,
-    pageSizeOptions:[10,20],
+    pageSizeOptions:[5,10],
     paginationAlignment,
     actionsColumnIndex: -1,
     searchFieldAlignment: "left",
@@ -153,7 +157,7 @@ export default function UsersDataTable() {
 
   const components = {
     // define your custom components here
-    OverlayLoading: () => <Loading />,
+    // OverlayLoading: () => <Loading />,
   };
 
   const handleModalClose = () => {

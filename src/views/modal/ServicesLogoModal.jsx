@@ -13,6 +13,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function ServicesLogoModal(props) {
   const {user_ID} = useStateContext()
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState(null)
   const navigate = useNavigate() 
   const id = props.Data?.id ?? null
@@ -55,6 +56,7 @@ export default function ServicesLogoModal(props) {
  
   const onSubmit = async (ev) => {
       ev.preventDefault()
+      setIsSubmitting(true);
       const payload = {...servicesLogo}
 
       try {
@@ -72,6 +74,7 @@ export default function ServicesLogoModal(props) {
       } catch (err) {
         const response = err.response;
         if (response && response.status === 422) {
+          setIsSubmitting(false);
           setErrors(response.data.errors);
         }
       }

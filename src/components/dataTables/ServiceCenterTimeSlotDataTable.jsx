@@ -152,9 +152,9 @@ export default function ServiceCenterTimeSlotDataTable() {
 
   const options = {
     paging:true,
-    pageSize:10,
+    pageSize:5,
     emptyRowsWhenPaging: false,
-    pageSizeOptions:[10,20],
+    pageSizeOptions:[5,10],
     paginationAlignment,
     actionsColumnIndex: -1,
     searchFieldAlignment: "left",
@@ -179,7 +179,7 @@ export default function ServiceCenterTimeSlotDataTable() {
 
   const components = {
     // define your custom components here
-    OverlayLoading: () => <Loading />,
+    // OverlayLoading: () => <Loading />,
   };
 
   const handleClose = () => {

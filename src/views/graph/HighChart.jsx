@@ -347,20 +347,21 @@ export default function HighChart() {
 
         // Convert fetched data into Highcharts compatible series format
         const seriesData = yearly.map(item => ({
+          
           name: item.services,
           data: [
-            item.January,
-            item.February,
-            item.March,
-            item.April,
-            item.May,
-            item.June,
-            item.July,
-            item.August,
-            item.September,
-            item.October,
-            item.November,
-            item.December
+            parseInt(item.January),
+            parseInt(item.February),
+            parseInt(item.March),
+            parseInt(item.April),
+            parseInt(item.May),
+            parseInt(item.June),
+            parseInt(item.July),
+            parseInt(item.August),
+            parseInt(item.September),
+            parseInt(item.October),
+            parseInt(item.November),
+            parseInt(item.December)
           ]
         }));
 
@@ -413,18 +414,18 @@ export default function HighChart() {
               const seriesData = yearly.map(item => ({
                 name: item.services,
                 data: [
-                  item.January,
-                  item.February,
-                  item.March,
-                  item.April,
-                  item.May,
-                  item.June,
-                  item.July,
-                  item.August,
-                  item.September,
-                  item.October,
-                  item.November,
-                  item.December
+                  parseInt(item.January),
+                  parseInt(item.February),
+                  parseInt(item.March),
+                  parseInt(item.April),
+                  parseInt(item.May),
+                  parseInt(item.June),
+                  parseInt(item.July),
+                  parseInt(item.August),
+                  parseInt(item.September),
+                  parseInt(item.October),
+                  parseInt(item.November),
+                  parseInt(item.December)
                 ]
               }));
 
@@ -496,8 +497,12 @@ export default function HighChart() {
     } else {
       if (today && today.length > 0) {
         const options = {
-          // Enable the menu options
-          // legend:{ enabled:false },
+          legend: {
+            align: 'center',
+            verticalAlign: 'top',
+            layout: 'horizontal',
+            y: 10 // Adjust the vertical position as needed
+          },
           chart: {
             type: 'spline'
           },
