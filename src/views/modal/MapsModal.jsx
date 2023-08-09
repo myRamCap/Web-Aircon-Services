@@ -12,10 +12,12 @@ import { useNavigate } from 'react-router-dom';
 export default function MapsModal(props) {
   const navigate = useNavigate()
   const [image, setImage] = useState('')
+  const url = window.location.origin + '/map';
+  const googleMapURL = 'http://localhost:3000/map'; // Replace with your Google Maps URL
   const onSubmit = (ev) => {
       ev.preventDefault()
   }
-
+// console.log(url)
   const handleChange = (event, newValue) => {
        setImage(newValue.image);
   }
@@ -27,7 +29,7 @@ export default function MapsModal(props) {
   }
 
   return (
-    <div id="">
+    <div id="" >
         <Modal
           show={props.show}
           onHide={props.close}
@@ -39,7 +41,14 @@ export default function MapsModal(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <GoogleMaps />
+          {/* <GoogleMaps /> */}
+       
+            <iframe width="100%" height="100%" src={url} ></iframe>
+   
+          {/* <div id="iframeContainer" style="width: 100%; height: 100vh;">
+            <iframe width="100%" height="100%" frameborder="0" style="border:0" src={googleMapURL} allowfullscreen>
+            </iframe>
+          </div> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.close} >

@@ -70,7 +70,6 @@ export default function UsersDataTable() {
   };
 
   const handleDelUser = (event,rowData) => {
-    console.log(rowData)
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -81,7 +80,6 @@ export default function UsersDataTable() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(rowData.id)
         axiosClient.post(`/tech/delete_account/${rowData.id}`);
       
         Swal.fire(

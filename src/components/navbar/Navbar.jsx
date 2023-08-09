@@ -164,7 +164,7 @@ export default function Navbar() {
                     </li>
                 ) : null
             }
-            { role == 1   ? 
+            { role == 1 || role == 2   ? 
                 ( 
                     <li>
                         <Link className={splitLocation[1] === "servicecost" ? "isActive" : ""} to="/servicecost">

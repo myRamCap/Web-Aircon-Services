@@ -42,7 +42,9 @@ export default function ServicesDataTable() {
         return <img src={rowData.image_url} style={styles} />;
       },
     },
-    { field: "name", title: "Name", customSort: (a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })},
+    { field: "name", title: "Services", customSort: (a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })},
+    { field: "aircon_type", title: "Aircon Type", customSort: (a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })},
+    { field: "service_center", title: "Service Center", customSort: (a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })},
     { field: "details", title: "Details", customSort: (a, b) => a.details.localeCompare(b.details, undefined, { sensitivity: 'base' }) },
     { field: "created_by", title: "Created By", customSort: (a, b) => a.details.localeCompare(b.details, undefined, { sensitivity: 'base' }) },
     { field: "updated_by", title: "Updated By", customSort: (a, b) => a.details.localeCompare(b.details, undefined, { sensitivity: 'base' }) },

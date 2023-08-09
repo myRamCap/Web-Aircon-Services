@@ -5,9 +5,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import ServiceCostModal from '../../views/modal/ServiceCostModal';
 import { useLocation } from 'react-router-dom';
 import axiosClient from '../../axios-client';
+import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function ServiceCostDataTable() {
     const location = useLocation()
+    const {user_ID, role} = useStateContext()
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false)
     const [serviceCost, setServiceCost] = useState([])
@@ -18,7 +20,9 @@ export default function ServiceCostDataTable() {
             service_center: "",
             service_id: "",
             service: "",
+            aircon_type: "",
             cost: "",
+            price: "",
             markup: "",
             notes: "",
         }
@@ -28,7 +32,7 @@ export default function ServiceCostDataTable() {
         setLoading(true);
     
         try {
-          const response = await axiosClient.get('/web/servicecost');
+          const response = await axiosClient.get(`/web/servicecost/${user_ID}`);
           const { data } = response;
           setServiceCost(data);
         } catch (error) {
@@ -42,8 +46,9 @@ export default function ServiceCostDataTable() {
         { title: 'Corporate Account', field: 'fullname' },
         { title: 'Service Center', field: 'service_center' },
         { title: 'Services',field: 'service' },
+        { title: 'Aircon Type',field: 'aircon_type' },
         { title: 'Cost',field: 'cost' },
-        { title: 'Mark up',field: 'markup' },
+        { title: 'Markup',field: 'markup' },
         { title: 'Price',field: 'price' },
         { title: 'Notes',field: 'notes' },
     ]
@@ -52,11 +57,13 @@ export default function ServiceCostDataTable() {
         {
             icon: () => <div className="btn btn-primary">Add New</div> ,
             isFreeAction: true,
+            hidden: role != "1",
             onClick: (event) => setShowModal(true)
         },
         {
             icon: () => <div className="btn btn-success btn-sm"><EditIcon  /></div> ,
             tooltip: 'Edit',
+            hidden: role != "1",
             onClick: (event,rowData) => {
                 setCostInfo({
                     ...costInfo,
@@ -65,7 +72,9 @@ export default function ServiceCostDataTable() {
                     service_center: rowData.service_center,
                     service_id: rowData.service_id,
                     service: rowData.service,
+                    aircon_type: rowData.aircon_type,
                     cost: rowData.cost,
+                    price: rowData.price,
                     markup: rowData.markup,
                     notes: rowData.notes,
                 })
@@ -74,8 +83,20 @@ export default function ServiceCostDataTable() {
         }
     ]
 
+    const handlePrint = () => {
+        window.print();
+      };
+
     const options = {
         // filtering: true, 
+        // ... other options ...
+    toolbar: {
+        addRemoveColumns: true,
+        exportCSV: true,
+        exportPDF: true,
+        search: true,
+        print: handlePrint,
+      },
         exportButton: true,
         paging:true,
         pageSize:5,

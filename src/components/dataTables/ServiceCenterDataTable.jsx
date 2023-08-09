@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../axios-client';
 import Loading from '../loader/Loading';
 import { useStateContext } from '../../contexts/ContextProvider';
+import MapsModal from '../../views/modal/MapsModal';
 
 export default function ServiceCenterDataTable(props) {
   const {user_ID, role} = useStateContext()
@@ -19,7 +20,8 @@ export default function ServiceCenterDataTable(props) {
     {
       id: null,
       name: "",
-      Category: "",
+      corporate_name: "",
+      corporate_id: "",
       country: "",
       house_number: "",
       barangay: "",
@@ -44,7 +46,7 @@ export default function ServiceCenterDataTable(props) {
   const columns = [
     { field: "name", title: "Name", customSort: (a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }), render:rowData=><Link underline="hover" to={`/servicecenter/details/${rowData.name}/${rowData.id}`}>{rowData.name}</Link>},
     { field: "reference_number", title: "Reference #", customSort: (a, b) => a.category.localeCompare(b.category, undefined, { sensitivity: 'base' }) },
-    { field: "category", title: "Category", customSort: (a, b) => a.category.localeCompare(b.category, undefined, { sensitivity: 'base' }) },
+    // { field: "category", title: "Category", customSort: (a, b) => a.category.localeCompare(b.category, undefined, { sensitivity: 'base' }) },
     { field: "barangay", title: "Barangay", customSort: (a, b) => a.barangay.localeCompare(b.barangay, undefined, { sensitivity: 'base' }) },
     { field: "municipality", title: "Municipality", customSort: (a, b) => a.municipality.localeCompare(b.municipality, undefined, { sensitivity: 'base' }) },
     { field: "province", title: "Province", customSort: (a, b) => a.province.localeCompare(b.province, undefined, { sensitivity: 'base' }) },
@@ -67,11 +69,13 @@ export default function ServiceCenterDataTable(props) {
       icon: () => <div className="btn btn-success btn-sm"><EditIcon  /></div> ,
       tooltip: 'Edit',
       onClick: (event,rowData) => {
+        console.log(rowData)
         setServiceCenterInfo({
           ...serviceCenterInfo,
           id: rowData.id,
+          corporate_id: rowData.user_id,
           name: rowData.name,
-          category: rowData.category,
+          corporate_name: rowData.first_name,
           country: rowData.country,
           house_number: rowData.house_number,
           barangay: rowData.barangay,
@@ -135,7 +139,7 @@ export default function ServiceCenterDataTable(props) {
   }
 
   return (
-    <div>
+    <div >
       <MaterialTable
         title=""
         columns={columns}
@@ -145,6 +149,7 @@ export default function ServiceCenterDataTable(props) {
         isLoading={loading}
         components={components}
       />
+       {/* <MapsModal show={showModal} close={handleClose} id={1} />  */}
       <ServiceCenterModal show={showModal} close={handleClose} Data={serviceCenterInfo} /> 
     </div>
   )

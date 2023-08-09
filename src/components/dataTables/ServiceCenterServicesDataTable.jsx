@@ -21,6 +21,7 @@ export default function ServiceCenterServicesDataTable(props) {
       estimated_time: null,
       estimated_time_desc: "",
       name: "",
+      aircon_type: "",
       details: "",
       image_id: "",
       image_url: "",
@@ -37,7 +38,8 @@ export default function ServiceCenterServicesDataTable(props) {
   }
  
   const columns = [
-    { field: "name", title: "Name" },
+    { field: "name", title: "Services" },
+    { field: "aircon_type", title: "Aircon Type" },
     { field: "details", title: "Details" },
     { field: "estimated_time_desc", title: "Estimated Time" },
     { field: "created_at", title: "Date Created" }
@@ -53,6 +55,7 @@ export default function ServiceCenterServicesDataTable(props) {
       icon: () => <div className="btn btn-success btn-sm"><EditIcon  /></div> ,
       tooltip: 'Edit',
       onClick: (event,rowData) => { 
+        console.log(rowData)
         setServiceCenterServicesInfo({
           ...serviceCenterServicesInfo,
           id: rowData.id,
@@ -61,6 +64,7 @@ export default function ServiceCenterServicesDataTable(props) {
           estimated_time: rowData.estimated_time,
           estimated_time_desc: rowData.estimated_time_desc,
           name: rowData.name,
+          aircon_type: rowData.aircon_type,
           details: rowData.details,
           image_id: rowData.image_id,
           image_url: rowData.image_url,

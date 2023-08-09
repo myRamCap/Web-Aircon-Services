@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import Navbar from './navbar/Navbar'
 import { useStateContext } from '../contexts/ContextProvider'
+import TopNav from './navbar/TopNav'
 
 
 export default function DefaultLayout() {
@@ -13,8 +14,10 @@ export default function DefaultLayout() {
     
   return (
     <div>
+      
         <Navbar />
         <div className="home_content"> 
+                {/* <TopNav /> */}
                 <Outlet />
         </div>
     </div>

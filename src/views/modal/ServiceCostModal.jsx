@@ -24,7 +24,8 @@ export default function ServiceCostModal(props) {
         service_center: "",
         service_id: "",
         service: "",
-        cost: "",
+        aircon_type: "",
+        price: "",
         markup: "",
         notes: "",
       })
@@ -75,7 +76,7 @@ export default function ServiceCostModal(props) {
         })
 
         try {
-            const response = await axiosClient.get(`/web/service_center/service/${newValue.id}`);
+            const response = await axiosClient.get(`/web/services_cost/${newValue.id}`);
             setServices(response.data.data);
         } catch (err) {
             // console.error(err);
@@ -87,7 +88,8 @@ export default function ServiceCostModal(props) {
         setCost({
             ...cost,
             service_id: newValue.id,
-            service: newValue.name
+            service: newValue.name,
+            aircon_type: newValue.aircon_type
         })
     }
 
@@ -100,7 +102,8 @@ export default function ServiceCostModal(props) {
             service_center: props.Data.service_center,
             service_id: props.Data.service_id,
             service: props.Data.service,
-            cost: props.Data.cost,
+            aircon_type: props.Data.aircon_type,
+            price: props.Data.price,
             markup: props.Data.markup,
             notes: props.Data.notes,
           })
@@ -117,9 +120,9 @@ export default function ServiceCostModal(props) {
             service_center: "",
             service_id: "",
             service: "",
-            cost: "",
+            aircon_type: "",
+            price: "",
             markup: "",
-            cost: "",
           })
           setErrors(null)
           setServices([])
@@ -170,8 +173,8 @@ export default function ServiceCostModal(props) {
                                         value={cost.service}
                                         options={services}
                                         onChange={handleChangeService}
-                                        getOptionLabel={(options) => options.name ? options.name.toString() : cost.service}
-                                        isOptionEqualToValue={(option, value) => option.name ?? "" === cost.service}
+                                        getOptionLabel={(options) => options.name ? options.name + " - " +  options.aircon_type : cost.service + " - " + cost.aircon_type}
+                                        isOptionEqualToValue={(option, value) => option.name +  " - " + option.aircon_type ?? "" === cost.service + " - " + cost.aircon_type}
                                         renderInput={(params) => (
                                             <TextField
                                             {...params}
@@ -191,9 +194,17 @@ export default function ServiceCostModal(props) {
                                 <Col xs={12} md={6}>
                                     <TextField 
                                         type="number" 
-                                        onChange={ev => setCost({...cost, cost: ev.target.value})} 
-                                        value={cost.cost} 
-                                        label="Cost" 
+                                        onChange={ev => {
+                                            const inputCost = ev.target.value;
+                                            const markup = (5/100) * inputCost;
+                                            setCost({
+                                                ...cost, 
+                                                price: inputCost,
+                                                markup: markup
+                                            });
+                                        }} 
+                                        value={cost.price} 
+                                        label="Price" 
                                         variant="outlined" 
                                         fullWidth
                                     />

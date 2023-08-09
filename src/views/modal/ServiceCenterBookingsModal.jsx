@@ -120,7 +120,6 @@ export default function ServiceCenterBookingsModal(props) {
   }
 
   const handleChangeAircon = (event, newValue) => {
-    console.log(newValue)
     setBooking({
       ...booking,
       aircon_id: newValue.id,

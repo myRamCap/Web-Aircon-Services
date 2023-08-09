@@ -20,6 +20,9 @@ import OTP2 from "./views/otp verification/OTP2"
 import HighChart from "./views/graph/HighChart"
 import AirconList from "./views/pages/AirconList"
 import ServiceCost from "./views/pages/ServiceCost"
+import GoogleMaps from "./components/googleMap/GoogleMaps"
+import TestMaps from "./views/modal/TestMaps"
+import TopNav from "./components/navbar/TopNav"
 
 const router = createBrowserRouter([
     {
@@ -124,9 +127,13 @@ const router = createBrowserRouter([
         path: '*',
         element: <NotFound />
     },
+    {
+        path: '/map',
+        element: <GoogleMaps />
+    },
     // {
-    //     path: '/email',
-    //     element: <EmailSender />
+    //     path: '/test',
+    //     element: <TopNav />
     // }
     
     

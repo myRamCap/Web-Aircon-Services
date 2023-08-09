@@ -17,7 +17,7 @@ import NoImage from '../../assets/images/No-Image.png';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function ServiceCenterModal(props) {
-  const {user_ID} = useStateContext()
+  const {user_ID, role} = useStateContext()
   const location = useLocation()
   const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,13 +29,14 @@ export default function ServiceCenterModal(props) {
   const [brgy, setBrgy] = useState([])
   const [valCityMun, setValCityMun] = useState(null);
   const [valBrgy, setValBrgy] = useState(null);
+  const [corporate, setCorporate] = useState([]);
   const longi = localStorage.longi ?? ''
   const lati = localStorage.lati ?? ''
   const id = props.Data?.id ?? null
   const [serviceCenter, setServiceCenter] = useState({
     id: null,
     name: "",
-    category: "",
+    // category: "",
     country: "Philippines",
     house_number: "",
     barangay: "",
@@ -46,8 +47,18 @@ export default function ServiceCenterModal(props) {
     group: "",
     corporate_manager_id: user_ID,
     municipality_code: "",
+    corporate_name: "",
     image: "",
   }) 
+
+  const getClient = async () => {
+    try {
+      const { data } = await axiosClient.get('/web/corporate_account')
+      setCorporate(data)
+    } catch (error) {
+
+    }
+  }
  
   const handleChangeProvince = (event, newValue) => {
     const filterCity = City.RECORDS.filter((data) => data.provCode === newValue.provCode)
@@ -64,7 +75,6 @@ export default function ServiceCenterModal(props) {
   }
  
   const handleChangeMunicipality = (event, newValue) => {
-    console.log(newValue)
     setValCityMun(newValue);
     const filterBrgy = Barangay.RECORDS.filter((data) => data.citymunCode === newValue.citymunCode)
     setBrgy(filterBrgy) 
@@ -82,6 +92,14 @@ export default function ServiceCenterModal(props) {
     setServiceCenter({
       ...serviceCenter,
       barangay: newValue.brgyDesc,
+    })
+  }
+
+  const handleChangeCorporate = (event, newValue) => {
+    setServiceCenter({
+      ...serviceCenter,
+      corporate_name: newValue.first_name,
+      corporate_manager_id: newValue.id,
     })
   }
  
@@ -163,12 +181,12 @@ export default function ServiceCenterModal(props) {
     setShowImageModal(false)
   }
 
-  const onRadioChange = (event, newValue) => {
-    setServiceCenter({
-      ...serviceCenter,
-      category: newValue,
-    })
-  }
+  // const onRadioChange = (event, newValue) => {
+  //   setServiceCenter({
+  //     ...serviceCenter,
+  //     category: newValue,
+  //   })
+  // }
 
   const onImageChoose = (ev) => {
     const file = ev.target.files[0]
@@ -188,7 +206,7 @@ export default function ServiceCenterModal(props) {
         ...serviceCenter,
         id: props.Data.id,
         name: props.Data.name,
-        category: props.Data.category,
+        corporate_name: props.Data.corporate_name,
         country: props.Data.country,
         house_number: props.Data.house_number,
         barangay: props.Data.barangay,
@@ -198,17 +216,19 @@ export default function ServiceCenterModal(props) {
         latitude: props.Data.latitude,
         group: props.Data.group,
         image: props.Data.image,
+        corporate_manager_id : props.Data.corporate_id
       })
     }
   }, [id])
 
   useEffect(() => {
+    getClient()
     if (props.show == false) {
       setServiceCenter({
         ...serviceCenter,
         id: null,
         name: "",
-        category: "",
+        // category: "",
         country: "Philippines",
         house_number: "",
         barangay: "",
@@ -219,6 +239,7 @@ export default function ServiceCenterModal(props) {
         group: "",
         municipality_code: "",
         image: "",
+        corporate_name: ""
       })
       setValBrgy(null);
       setValCityMun(null);
@@ -253,7 +274,7 @@ export default function ServiceCenterModal(props) {
               </div>
             }
             <Form onSubmit={onSubmit}>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row>
                 <Col xs={12} md={6}>
                   <RadioGroup
@@ -268,7 +289,7 @@ export default function ServiceCenterModal(props) {
                   </RadioGroup>
                 </Col>
               </Row>
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row>
                 <Col xs={12} md={6}>
@@ -444,6 +465,32 @@ export default function ServiceCenterModal(props) {
                 </Col>
               </Row>
             </Form.Group>
+            { role == 1 && 
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Row>
+                  <Col xs={12} md={6}>
+                  <Autocomplete
+                      disableClearable
+                      onChange={handleChangeCorporate}
+                      options={corporate}
+                      value={serviceCenter.corporate_name}
+                      getOptionLabel={(options) => options.first_name ? options.first_name.toString() : serviceCenter.corporate_name}  
+                      isOptionEqualToValue={(option, value) => option.first_name ?? ""  === serviceCenter.corporate_name  }
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Corporate Account"
+                          InputProps={{
+                            ...params.InputProps,
+                            type: 'search',
+                          }}
+                        />
+                      )}
+                    />
+                  </Col>
+                </Row>
+              </Form.Group>
+            }
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row >
                 <Col xs={12} md={12}>

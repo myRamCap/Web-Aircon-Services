@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { Card, CardMedia, TextField } from '@mui/material';
+import ACType from '../../data/JSON/refACType.json' 
+import { Autocomplete, Card, CardMedia, TextField } from '@mui/material';
 import NoImage from '../../assets/images/No-Image.png';
 import axiosClient from '../../axios-client';
 import Swal from 'sweetalert2'
@@ -19,6 +20,7 @@ export default function ServicesLogoModal(props) {
   const id = props.Data?.id ?? null
   const [servicesLogo, setServicesLogo] = useState({
     id: null,
+    aircon_type: "",
     title: "",
     description: "",
     image: "",
@@ -32,6 +34,7 @@ export default function ServicesLogoModal(props) {
       setServicesLogo({
         ...servicesLogo,
         id: props.Data.id,
+        aircon_type: props.Data.aircon_type,
         title: props.Data.title,
         description: props.Data.description,
         image: props.Data.image,
@@ -40,7 +43,14 @@ export default function ServicesLogoModal(props) {
     }
   }, [id])
 
- 
+  const optionsACType = ACType.RECORDS.map((option) => {
+    const firstLetter = option.name[0].toUpperCase();
+    return {
+      firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
+      ...option,
+    };
+  })
+
   const onImageChoose = (ev) => {
     const file = ev.target.files[0]
     const reader = new FileReader()
@@ -53,9 +63,17 @@ export default function ServicesLogoModal(props) {
     }
     reader.readAsDataURL(file)
   }
+
+  const handleChangeACType = (event, newValue) => { 
+    setServicesLogo({
+      ...servicesLogo,
+      aircon_type: newValue.name,
+    }) 
+  }
  
   const onSubmit = async (ev) => {
       ev.preventDefault()
+      setErrors(null)
       setIsSubmitting(true);
       const payload = {...servicesLogo}
 
@@ -69,6 +87,7 @@ export default function ServicesLogoModal(props) {
           title: 'Success',
           text: "Your data has been successfully saved!",
         }).then(() => {
+          setIsSubmitting(false);
           navigate('/serviceslogo' , {state:  'success' })
         })
       } catch (err) {
@@ -85,6 +104,7 @@ export default function ServicesLogoModal(props) {
       setServicesLogo({
         ...servicesLogo,
         id: null,
+        aircon_type: "",
         title: "",
         description: "",
         image: "",
@@ -114,10 +134,30 @@ export default function ServicesLogoModal(props) {
               <Row>
                 <Col xs={12} md={6}>
                     <Col xs={12} md={12}>
-                    <TextField type="text" value={servicesLogo.title} onChange={ev => setServicesLogo({...servicesLogo, title: ev.target.value})} id="title" label="Title" variant="outlined" fullWidth/>
+                      <Autocomplete
+                        disableClearable
+                        value={ servicesLogo.aircon_type}
+                        options={optionsACType}
+                        onChange={handleChangeACType}
+                        getOptionLabel={(options) => options.name ? options.name.toString() : servicesLogo.aircon_type}
+                        isOptionEqualToValue={(option, value) => option.name ?? "" === servicesLogo.aircon_type}
+                        renderInput={(params) => (
+                            <TextField
+                            {...params}
+                            label="Aircon Type"
+                            InputProps={{
+                                ...params.InputProps,
+                                type: 'search',
+                            }}
+                            />
+                        )}
+                      />
                     </Col>
                     <Col xs={12} md={12} className='mt-3'>
-                    <TextField type="text" value={servicesLogo.description} onChange={ev => setServicesLogo({...servicesLogo, description: ev.target.value})} id="description" label="Description" variant="outlined" fullWidth/>
+                      <TextField type="text" value={servicesLogo.title} onChange={ev => setServicesLogo({...servicesLogo, title: ev.target.value})} id="title" label="Service" variant="outlined" fullWidth/>
+                    </Col>
+                    <Col xs={12} md={12} className='mt-3'>
+                      <TextField type="text" value={servicesLogo.description} onChange={ev => setServicesLogo({...servicesLogo, description: ev.target.value})} id="description" label="Description" variant="outlined" fullWidth/>
                     </Col>
                     <Col xs={12} md={12} className="mt-5">
                       <input 
@@ -146,7 +186,7 @@ export default function ServicesLogoModal(props) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row >
                 <Col xs={12} md={12}>
-                  <Button variant="success"  type="submit">{id ? 'Save Changes' : 'Save'}</Button>
+                  <Button variant="success" disabled={isSubmitting} type="submit">{id ? 'Save Changes' : 'Save'}</Button>
                 </Col>
               </Row>
             </Form.Group>

@@ -23,6 +23,7 @@ export default function ServiceCenterServiceModal(props) {
   const [service, setService] = useState({
     id: null,
     customer_id: "",
+    aircon_type: "",
     customer_name: "",
     service_center_id: param.id,
     service_id: null,
@@ -32,7 +33,7 @@ export default function ServiceCenterServiceModal(props) {
     details: "",
     image_url: "",
   })
-
+ 
   const optionsEstimatedTime = EstimatedTime.RECORDS.map((option) => {
     const firstLetter = option.details[0].toUpperCase();
     return {
@@ -43,7 +44,7 @@ export default function ServiceCenterServiceModal(props) {
 
   const getService = async () => {
     try {
-      const response = await axiosClient.get(`/web/services/${user_ID}`);
+      const response = await axiosClient.get(`/web/service/${user_ID}/${param.id}`);
       setServices(response.data.data);
     } catch (err) {
       console.error(err);
@@ -81,11 +82,11 @@ export default function ServiceCenterServiceModal(props) {
   }
 
   const handleChangeService = (event, newValue) => {
-    console.log(newValue)
     setService({
       ...service,
       service_id: newValue.id,
       name: newValue.name,
+      aircon_type: newValue.aircon_type,
       details: newValue.details,
       image_id: newValue.id,
       image_url: newValue.image_url,
@@ -109,6 +110,7 @@ export default function ServiceCenterServiceModal(props) {
         estimated_time: props.Data.estimated_time,
         estimated_time_desc: props.Data.estimated_time_desc,
         name: props.Data.name,
+        aircon_type: props.Data.aircon_type,
         details: props.Data.details,
         image_url: props.Data.image_url,
       })
@@ -125,6 +127,7 @@ export default function ServiceCenterServiceModal(props) {
         estimated_time: null,
         estimated_time_desc: "",
         name: "",
+        aircon_type: "",
         details: "",
         image_url: "",
       })
@@ -156,12 +159,12 @@ export default function ServiceCenterServiceModal(props) {
                         onChange={handleChangeService}
                         options={services}  
                         value={service.name}
-                        getOptionLabel={(options) => options.name ? options.name.toString() : service.name}
-                        isOptionEqualToValue={(option, value) => option.name ?? "" === service.name}
+                        getOptionLabel={(options) => options.name ? options.name + " - " +  options.aircon_type : service.name + " - " + service.aircon_type}
+                        isOptionEqualToValue={(option, value) => option.name +  " - " + option.aircon_type ?? "" === service.name + " - " + service.aircon_type}
                         renderInput={(params) => (
                             <TextField
                             {...params}
-                            label="Service Name" 
+                            label="Services" 
                             InputProps={{
                                 ...params.InputProps,
                                 type: 'search',

@@ -29,7 +29,7 @@ export default function ServiceCenterTabs(props) {
         </Link>
         <Box sx={{width: '100%', typography: 'body1'}} className="pt-3">
             <TabContext value={value}>
-            { role == 2 || role == 3 ? 
+            { role == 1 || role == 2 || role == 3 ? 
                 (
                     <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                         <TabList onChange={handleChange} aria-label="lab API tabs example">

@@ -22,6 +22,7 @@ export default function ServicesModal(props) {
   const [service, setService] = useState({
     id: null,
     name: "",
+    aircon_type: "",
     details: "",
     service_center_id: "",
     service_center: "",
@@ -40,7 +41,7 @@ export default function ServicesModal(props) {
       // Handle error as needed
     }
   }
-
+ 
   const getServiceCenter = async () => {
     try {
       const response = await axiosClient.get(`/web/servicecenter/${user_ID}`);
@@ -83,6 +84,7 @@ export default function ServicesModal(props) {
     setService({
       ...service,
       name: newValue.title,
+      aircon_type: newValue.aircon_type,
       details: newValue.description,
       image_id: newValue.id,
       image_url: newValue.image_url,
@@ -99,11 +101,11 @@ export default function ServicesModal(props) {
 
   useEffect(() => {
     if (id) { 
-      console.log(props.Data)
       setService({
         ...service,
         id: props.Data.id,
         name: props.Data.name,
+        aircon_type: props.Data.aircon_type,
         details: props.Data.details,
         image_id: props.Data.image_id,
         image_url: props.Data.image_url,
@@ -121,6 +123,7 @@ export default function ServicesModal(props) {
         ...service,
         id: null,
         name: "",
+        aircon_type: "",
         details: "",
         image_id: "",
         image_url: "",
@@ -156,11 +159,11 @@ export default function ServicesModal(props) {
                         onChange={handleChange}
                         options={serviceLogo}  
                         value={service.name}
-                        getOptionLabel={(options) => options.title ? options.title.toString() : service.name}
+                        getOptionLabel={(options) => options.title ? options.title + " - " + options.aircon_type : service.name + " - " + service.aircon_type }
                         renderInput={(params) => (
                             <TextField
                             {...params}
-                            label="Name" 
+                            label="Service" 
                             InputProps={{
                                 ...params.InputProps,
                                 type: 'search',
@@ -173,14 +176,13 @@ export default function ServicesModal(props) {
                         <TextField 
                           type="text" 
                           value={service.details} 
-                          id="description" 
                           label="Description" 
                           variant="outlined" 
                           fullWidth
                         />
                     </Col>
                     <Col xs={12} md={12} className="mt-3 ">
-                      { role == 2 &&
+                      { role == 2 || role == 1 &&
                         <Autocomplete
                           disableClearable
                           value={service.service_center}

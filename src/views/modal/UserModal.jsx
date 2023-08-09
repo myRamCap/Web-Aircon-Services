@@ -95,7 +95,7 @@ export default function UserModal(props) {
       service_center: newValue?.name,
     })
   }
-
+ 
   const handleChangeBranchManager= (event, newValue) => {
     setUser({
       ...user,
@@ -106,7 +106,7 @@ export default function UserModal(props) {
 
   const onSubmit = async (ev) => {
     ev.preventDefault()
-    // setIsSubmitting(true);
+    setIsSubmitting(true);
     const payload = {...user}
 
     try {
@@ -356,7 +356,7 @@ export default function UserModal(props) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row >
                 <Col xs={12} md={12}>
-                  <Button variant="success"  type="submit" disabled={isSubmitting}>{id ? 'Save Changes' : 'Save'}</Button>
+                  <Button variant="success"  type="submit" >{id ? 'Save Changes' : 'Save'}</Button>
                 </Col>
               </Row>
             </Form.Group>

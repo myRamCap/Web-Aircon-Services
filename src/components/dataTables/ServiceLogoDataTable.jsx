@@ -16,10 +16,11 @@ export default function ServiceLogoDataTable() {
     const [serviceLogoID, setServiceLogoID] = useState([
       {
         id: "",
+        aircon_type: "",
         title: "",
         description: "",
-        image: null,
-        image_url: null,
+        image: "",
+        image_url: "",
       }
     ])
 
@@ -39,7 +40,8 @@ export default function ServiceLogoDataTable() {
           return <img src={rowData.image_url ?? NoImage} style={styles} />;
         },
       },
-      { field: "title", title: "Title", customSort: (a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }) },
+      { field: "title", title: "Services", customSort: (a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }) },
+      { field: "aircon_type", title: "Aircon Type", customSort: (a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }) },
       { field: "description", title: "Description", customSort: (a, b) => a.description.localeCompare(b.description, undefined, { sensitivity: 'base' }) },
       { field: "created_by", title: "Created By", customSort: (a, b) => a.description.localeCompare(b.description, undefined, { sensitivity: 'base' }) },
       { field: "updated_by", title: "updated_by", customSort: (a, b) => a.description.localeCompare(b.description, undefined, { sensitivity: 'base' }) },
@@ -60,6 +62,7 @@ export default function ServiceLogoDataTable() {
             setServiceLogoID({
               ...serviceLogoID,
               id: rowData.id,
+              aircon_type: rowData.aircon_type,
               title: rowData.title,
               description: rowData.description,
               image: rowData.image,
@@ -122,7 +125,7 @@ export default function ServiceLogoDataTable() {
     <div> 
         <MaterialTable
         title=""
-        rowsPerPageOptions={[10, 25, 50]}
+        // rowsPerPageOptions={[10, 25, 50]}
         columns={columns}
         data={servicesLogo.data}
         actions={action}

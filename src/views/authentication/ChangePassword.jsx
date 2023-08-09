@@ -59,8 +59,6 @@ export default function ChangePassword() {
             password: inputPassRef.current.value
         }
 
-       // console.log(payload)
-
         axiosClient.post('/login', payload)
             .then(({data}) => {
                 navigate('/otp')
@@ -75,12 +73,10 @@ export default function ChangePassword() {
                 if (response && response.status === 422) {
                   if (response.data.errors) {
                     setErrors(response.data.errors)
-                    console.log(response.data.errors)
                   }else {
                     setErrors({
                       email: [response.data.message]
                     })
-                    console.log(response.data.message)
                   }
                 }
               })

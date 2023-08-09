@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStateContext } from '../../contexts/ContextProvider';
 
 export default function Booking(props) {
-  const {user_ID} = useStateContext()
+  const {user_ID, role} = useStateContext()
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState(null)
   const [disabledAircon, setDisabledAircon] = useState(true)
@@ -158,7 +158,6 @@ export default function Booking(props) {
   }
 
   const handleChangeAircon = (event, newValue) => {
-    console.log(newValue)
     setBooking({
       ...booking,
       aircon_id: newValue.id,
@@ -463,15 +462,38 @@ export default function Booking(props) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Row>
               <Col xs={12} md={6}>
+                { role == 1 &&
+                  <Autocomplete
+                  id="status"
+                  disableClearable
+                  onChange={handleChangeStatus}
+                  options={optionsStatus.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
+                  value={booking.status}
+                  getOptionLabel={(options) => options.name ? options.name.toString() : booking.status}
+                  isOptionEqualToValue={(option, value) => option.name ?? "" === booking.status}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Service Center"
+                      InputProps={{
+                        ...params.InputProps,
+                        type: 'search',
+                      }}
+                    />
+                  )}
+                />
+                }
+                { role != 1 &&
                   <TextField 
                     value={booking.service_center} 
                     disabled 
                     type="text" 
-                    id="service_center" 
                     label="Service Center" 
                     variant="outlined" 
                     fullWidth 
                   />
+                }
+                  
                 </Col>
                 <Col xs={12} md={6}>
                   <TextField 

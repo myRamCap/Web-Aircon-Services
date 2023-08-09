@@ -86,7 +86,6 @@ export default function OTP() {
       setErrors('');
     } catch (error) {
       // Handle error
-      console.log(error);
       setLoading(false);
       setErrors('');
     }

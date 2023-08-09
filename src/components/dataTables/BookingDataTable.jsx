@@ -216,9 +216,9 @@ export default function BookingDataTable() {
         components={components}
       />
 
-  { role != 1 &&
+  {/* { role != 1 && */}
       <Booking show={showModal} close={handleClose} userID={user_ID} Data={bookingInfo}/> 
-  }
+  {/* } */}
     </div>
   )
 }

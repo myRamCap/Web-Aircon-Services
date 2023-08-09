@@ -114,7 +114,6 @@ export default function OTP2() {
     
           axiosClient.post('/expiredotp', otpEmail).then(({ data }) => {
             // Navigate('/dashboard')
-            // console.log(data)
           });
         }
       }, [countDown, runTimer]);
