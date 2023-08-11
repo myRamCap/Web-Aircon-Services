@@ -182,7 +182,8 @@ export default function ServicesModal(props) {
                         />
                     </Col>
                     <Col xs={12} md={12} className="mt-3 ">
-                      { role == 2 || role == 1 &&
+                      { role == 1 || role == 2 ?
+                      (
                         <Autocomplete
                           disableClearable
                           value={service.service_center}
@@ -200,8 +201,9 @@ export default function ServicesModal(props) {
                               }}
                               />
                           )}
-                        />
-                      }
+                        /> 
+                      ) : null
+                      } 
                       
                     </Col>
                 </Col>

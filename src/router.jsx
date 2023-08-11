@@ -23,6 +23,7 @@ import ServiceCost from "./views/pages/ServiceCost"
 import GoogleMaps from "./components/googleMap/GoogleMaps"
 import TestMaps from "./views/modal/TestMaps"
 import TopNav from "./components/navbar/TopNav"
+import Profile from "./views/pages/Profile"
 
 const router = createBrowserRouter([
     {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
             {
                 path: '/servicecost',
                 element: <ServiceCost />
+            },
+            {
+                path: '/profile',
+                element: <Profile />
             } 
             
         ]

@@ -12,17 +12,34 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
+import { useStateContext } from '../../contexts/ContextProvider';
+import axiosClient from '../../axios-client';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Logout'];
 
 export default function TopNav() {
-
+  const {user_ID, setUser, setToken, setRole, role, setUser_ID} = useStateContext()
+  const navigate = useNavigate()
+  const [userInfo, setUserInfo] = useState([])
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
- 
+
+  const getUser = async () => {
+    try {
+      const response = await axiosClient.get(`/web/profile/${user_ID}`);
+      const { data } = response;
+      setUserInfo(data);
+    } catch (error) {
+      // Handle error
+    }
+  }
+
   const handleCloseUserMenu = (selectedSetting) => {
 
     setAnchorElUser(null);
@@ -53,8 +70,14 @@ export default function TopNav() {
                 })
             }
         })
+    } else if (setting === 'Profile') {
+      navigate('/profile', { state: 'success' });
     }
   };
+
+  useEffect(()=>{
+    getUser()
+  },[])
  
   return (
  
@@ -66,7 +89,7 @@ export default function TopNav() {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar alt="Remy Sharp" src={userInfo.image} />
             </IconButton>
           </Tooltip>
           <Menu

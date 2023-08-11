@@ -169,7 +169,7 @@
     const handleSelect = async (address) => {
       setValue(address, false);
       clearSuggestions();
-  console.log(address)
+  // console.log(address)
       try {
         const results = await getGeocode({ address });
         const { lat, lng } = await getLatLng(results[0]);

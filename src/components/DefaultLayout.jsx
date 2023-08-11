@@ -17,7 +17,7 @@ export default function DefaultLayout() {
       
         <Navbar />
         <div className="home_content"> 
-                {/* <TopNav /> */}
+                <TopNav />
                 <Outlet />
         </div>
     </div>
