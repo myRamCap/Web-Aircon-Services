@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { Autocomplete, Card, CardMedia, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import { useStateContext } from '../../contexts/ContextProvider';
 import axiosClient from '../../axios-client';
 import Swal from 'sweetalert2'
@@ -95,43 +95,41 @@ export default function ClientModal(props) {
         }
       },[props.show])
 
-
     return (
         <div id="clientModal">
             <Modal show={props.show} onHide={props.close} backdrop="static" size="lg">
                 <Modal.Header closeButton>
-                <Modal.Title>Edit Client</Modal.Title>
+                    <Modal.Title>Edit Client</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal-main">
-                {errors && 
-                <div className="sevices_logo_errors">
-                    {Object.keys(errors).map(key => (
-                    <p key={key}>{errors[key][0]}</p>
-                    ))}
-                </div>
-                }
-                <Form onSubmit={onSubmit}>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Row> 
-                            <Col xs={12} md={6}>
-                                <TextField disabled type="text" value={client.name} label="Name" variant="outlined" fullWidth/>
-                            </Col>
-                            <Col xs={12} md={6}>
-                                <TextField disabled type="text" value={client.email} label="Email" variant="outlined" fullWidth/>
-                            </Col> 
-                        </Row>
-                        <Row className='mt-3'> 
-                            <Col xs={12} md={6}>
-                                <TextField disabled type="text" value={client.address} label="Address" variant="outlined" fullWidth/>
-                            </Col>
-                            <Col xs={12} md={6}>
-                                <TextField type="text" value={client.contact_number} onChange={ev => setCLient({...client, contact_number: ev.target.value})} label="Contact Number" variant="outlined" fullWidth/>
-                            </Col> 
-                        </Row>
-                        
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Row className='mt-3'> 
+                    {errors && 
+                    <div className="sevices_logo_errors">
+                        {Object.keys(errors).map(key => (
+                        <p key={key}>{errors[key][0]}</p>
+                        ))}
+                    </div>
+                    }
+                    <Form onSubmit={onSubmit}>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Row> 
+                                <Col xs={12} md={6}>
+                                    <TextField disabled type="text" value={client.name} label="Name" variant="outlined" fullWidth/>
+                                </Col>
+                                <Col xs={12} md={6}>
+                                    <TextField disabled type="text" value={client.email} label="Email" variant="outlined" fullWidth/>
+                                </Col> 
+                            </Row>
+                            <Row className='mt-3'> 
+                                <Col xs={12} md={6}>
+                                    <TextField disabled type="text" value={client.address} label="Address" variant="outlined" fullWidth/>
+                                </Col>
+                                <Col xs={12} md={6}>
+                                    <TextField type="text" value={client.contact_number} onChange={ev => setCLient({...client, contact_number: ev.target.value})} label="Contact Number" variant="outlined" fullWidth/>
+                                </Col> 
+                            </Row>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Row className='mt-3'> 
                                 <Col xs={12} md={6}>
                                     <Autocomplete
                                         disableClearable
@@ -152,16 +150,16 @@ export default function ClientModal(props) {
                                         )}
                                     />
                                 </Col> 
-                        </Row>
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Row >
-                            <Col xs={12} md={12}>
-                                <Button variant="success" type="submit" disabled={isSubmitting} >Save Changes</Button>
-                            </Col>
-                        </Row>
-                    </Form.Group>
-            </Form>
+                            </Row>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Row >
+                                <Col xs={12} md={12}>
+                                    <Button variant="success" type="submit" disabled={isSubmitting} >Save Changes</Button>
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
             </Modal>
         </div>

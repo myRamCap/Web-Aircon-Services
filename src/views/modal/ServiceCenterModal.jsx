@@ -181,13 +181,6 @@ export default function ServiceCenterModal(props) {
     setShowImageModal(false)
   }
 
-  // const onRadioChange = (event, newValue) => {
-  //   setServiceCenter({
-  //     ...serviceCenter,
-  //     category: newValue,
-  //   })
-  // }
-
   const onImageChoose = (ev) => {
     const file = ev.target.files[0]
     const reader = new FileReader()
@@ -266,245 +259,229 @@ export default function ServiceCenterModal(props) {
               <Modal.Title>{id ? 'Edit Service Center' : 'Add Service Center'}</Modal.Title>
             </Modal.Header>
             <Modal.Body className="modal-main">
-            {errors && 
-              <div className="sevices_logo_errors">
-                {Object.keys(errors).map(key => (
-                  <p key={key}>{errors[key][0]}</p>
-                ))}
-              </div>
-            }
-            <Form onSubmit={onSubmit}>
-            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Row>
-                <Col xs={12} md={6}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-form-control-label-placement"
-                    name="category"
-                    onChange={onRadioChange}
-                    value={serviceCenter.category ?? null}
-                  >
-                    <FormControlLabel value="dealership" control={<Radio />} label="DEALERSHIP"/>
-                    <FormControlLabel value="nondealership" control={<Radio />} label="NON-DEALERSHIP"/>
-                  </RadioGroup>
-                </Col>
-              </Row>
-            </Form.Group> */}
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Row>
-                <Col xs={12} md={6}>
-                  <TextField 
-                    type="text" 
-                    value={serviceCenter.name} 
-                    onChange={ev => setServiceCenter({...serviceCenter, name: ev.target.value})} 
-                    id="name" 
-                    label="Name" 
-                    variant="outlined" 
-                    fullWidth
-                  />
-                </Col>
+              {errors && 
+                <div className="sevices_logo_errors">
+                  {Object.keys(errors).map(key => (
+                    <p key={key}>{errors[key][0]}</p>
+                  ))}
+                </div>
+              }
+              <Form onSubmit={onSubmit}>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Row>
+                    <Col xs={12} md={6}>
+                      <TextField 
+                        type="text" 
+                        value={serviceCenter.name} 
+                        onChange={ev => setServiceCenter({...serviceCenter, name: ev.target.value})} 
+                        id="name" 
+                        label="Name" 
+                        variant="outlined" 
+                        fullWidth
+                      />
+                    </Col>
 
-                <Col xs={12} md={6}> 
-                  <TextField 
-                    type="text" 
-                    onChange={ev => setServiceCenter({...serviceCenter, country: ev.target.value})} 
-                    id="country" 
-                    label="Country"
-                    variant="outlined" 
-                    value={country} 
-                    disabled 
-                    fullWidth
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Row>
-                <Col xs={12} md={6}>
-                  <TextField 
-                    type="text" 
-                    value={serviceCenter.house_number} 
-                    onChange={ev => setServiceCenter({...serviceCenter, house_number: ev.target.value})} 
-                    id="street" 
-                    label="House Number / Street" 
-                    variant="outlined" 
-                    fullWidth
-                  />
-                </Col>
-                <Col xs={12} md={6}> 
-                  <Autocomplete
-                    disableClearable
-                    onChange={handleChangeProvince}
-                    options={optionsProvince.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
-                    value={serviceCenter.province ?? ""}
-                    getOptionLabel={(options) => options.provDesc ? options.provDesc.toString() : serviceCenter.province}  
-                    isOptionEqualToValue={(option, value) => option.provDesc ?? ""  === serviceCenter.province  }
-                    renderInput={(params) => (
-                        <TextField
-                        {...params}
-                        label="Province"
-                        InputProps={{
-                            ...params.InputProps,
-                            type: 'search',
-                        }} 
-                        />
-                    )}
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Row>
-                <Col xs={12} md={6}>
-                  <Autocomplete
-                    disableClearable
-                    onChange={handleChangeMunicipality}
-                    options={optionsCityMun.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
-                    value={serviceCenter.municipality ?? valCityMun  }
-                    getOptionLabel={(options) =>  options.citymunDesc ? options.citymunDesc.toString() : serviceCenter.municipality}  
-                    isOptionEqualToValue={(option, value) => option.citymunDesc ?? "" === serviceCenter.municipality}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Municipality"
-                        InputProps={{
-                          ...params.InputProps,
-                          type: 'search',
-                        }}
+                    <Col xs={12} md={6}> 
+                      <TextField 
+                        type="text" 
+                        onChange={ev => setServiceCenter({...serviceCenter, country: ev.target.value})} 
+                        id="country" 
+                        label="Country"
+                        variant="outlined" 
+                        value={country} 
+                        disabled 
+                        fullWidth
                       />
-                    )}
-                  />
-                </Col>
-                <Col xs={12} md={6}> 
-                  <Autocomplete
-                    disableClearable
-                    onChange={handleChangeBrgy}
-                    options={optionsBarangay.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
-                    value={serviceCenter.barangay ?? valBrgy}
-                    getOptionLabel={(options) => options.brgyDesc ? options.brgyDesc.toString() : serviceCenter.barangay}
-                    isOptionEqualToValue={(option, value) => option.brgyDesc ?? "" === serviceCenter.barangay}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Barangay"
-                        InputProps={{
-                          ...params.InputProps,
-                          type: 'search',
-                        }}
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Row>
+                    <Col xs={12} md={6}>
+                      <TextField 
+                        type="text" 
+                        value={serviceCenter.house_number} 
+                        onChange={ev => setServiceCenter({...serviceCenter, house_number: ev.target.value})} 
+                        id="street" 
+                        label="House Number / Street" 
+                        variant="outlined" 
+                        fullWidth
                       />
-                    )}
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Row>
-                <Col xs={12} md={6}>
-                  <TextField 
-                    type="text" 
-                    id="longitude" 
-                    label="Longitude" 
-                    value={serviceCenter.longitude} 
-                    variant="outlined" 
-                    fullWidth
-                  />
-                </Col>
-                <Col xs={12} md={5}> 
-                  <TextField 
-                    type="text" 
-                    id="latitude" 
-                    label="Latitude" 
-                    value={serviceCenter.latitude}  
-                    variant="outlined" 
-                    fullWidth
-                  />
-                </Col>
-                <Col xs={12} md={1} > 
-                  {/* <Link to="/data"> */}
-                    <IconButton className="globe-icon" onClick={onclickMap}>
-                      <box-icon name='globe' className="globe-icon"></box-icon>
-                    </IconButton>
-                  {/* </Link> */}
-                </Col>
-              </Row>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Row>
-                <Col xs={12} md={6}>
-                  <TextField 
-                    type="number" 
-                    value={serviceCenter.group}  
-                    onChange={ev => setServiceCenter({...serviceCenter, group: ev.target.value})}  
-                    id="branchManager" 
-                    label="Group" 
-                    variant="outlined" 
-                    fullWidth
-                  />
-                </Col>
-                <Col xs={12} md={5}> 
-                    <input 
-                      accept=".jpg, .jpeg, .png" 
-                      onChange={onImageChoose} 
-                      className="fileUpload" 
-                      name="arquivo" 
-                      id="arquivo" 
-                      type="file" 
-                    />
-                </Col>
-                <Col xs={12} md={1}> 
-                    <Card raised className='sc-image' onClick={onclickImage}>
-                        <CardMedia 
-                          className='sc-image' 
-                          src={serviceCenter.image ? serviceCenter.image :  NoImage} 
-                          component="img"
-                          height="40"
-                          alt={"alt"}
-                          sx={{  objectFit: "contain" }}
+                    </Col>
+                    <Col xs={12} md={6}> 
+                      <Autocomplete
+                        disableClearable
+                        onChange={handleChangeProvince}
+                        options={optionsProvince.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
+                        value={serviceCenter.province ?? ""}
+                        getOptionLabel={(options) => options.provDesc ? options.provDesc.toString() : serviceCenter.province}  
+                        isOptionEqualToValue={(option, value) => option.provDesc ?? ""  === serviceCenter.province  }
+                        renderInput={(params) => (
+                            <TextField
+                            {...params}
+                            label="Province"
+                            InputProps={{
+                                ...params.InputProps,
+                                type: 'search',
+                            }} 
+                            />
+                        )}
+                      />
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Row>
+                    <Col xs={12} md={6}>
+                      <Autocomplete
+                        disableClearable
+                        onChange={handleChangeMunicipality}
+                        options={optionsCityMun.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
+                        value={serviceCenter.municipality ?? valCityMun  }
+                        getOptionLabel={(options) =>  options.citymunDesc ? options.citymunDesc.toString() : serviceCenter.municipality}  
+                        isOptionEqualToValue={(option, value) => option.citymunDesc ?? "" === serviceCenter.municipality}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Municipality"
+                            InputProps={{
+                              ...params.InputProps,
+                              type: 'search',
+                            }}
+                          />
+                        )}
+                      />
+                    </Col>
+                    <Col xs={12} md={6}> 
+                      <Autocomplete
+                        disableClearable
+                        onChange={handleChangeBrgy}
+                        options={optionsBarangay.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
+                        value={serviceCenter.barangay ?? valBrgy}
+                        getOptionLabel={(options) => options.brgyDesc ? options.brgyDesc.toString() : serviceCenter.barangay}
+                        isOptionEqualToValue={(option, value) => option.brgyDesc ?? "" === serviceCenter.barangay}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Barangay"
+                            InputProps={{
+                              ...params.InputProps,
+                              type: 'search',
+                            }}
+                          />
+                        )}
+                      />
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Row>
+                    <Col xs={12} md={6}>
+                      <TextField 
+                        type="text" 
+                        id="longitude" 
+                        label="Longitude" 
+                        value={serviceCenter.longitude} 
+                        variant="outlined" 
+                        fullWidth
+                      />
+                    </Col>
+                    <Col xs={12} md={5}> 
+                      <TextField 
+                        type="text" 
+                        id="latitude" 
+                        label="Latitude" 
+                        value={serviceCenter.latitude}  
+                        variant="outlined" 
+                        fullWidth
+                      />
+                    </Col>
+                    <Col xs={12} md={1} > 
+                      {/* <Link to="/data"> */}
+                        <IconButton className="globe-icon" onClick={onclickMap}>
+                          <box-icon name='globe' className="globe-icon"></box-icon>
+                        </IconButton>
+                      {/* </Link> */}
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Row>
+                    <Col xs={12} md={6}>
+                      <TextField 
+                        type="number" 
+                        value={serviceCenter.group}  
+                        onChange={ev => setServiceCenter({...serviceCenter, group: ev.target.value})}  
+                        id="branchManager" 
+                        label="Group" 
+                        variant="outlined" 
+                        fullWidth
+                      />
+                    </Col>
+                    <Col xs={12} md={5}> 
+                        <input 
+                          accept=".jpg, .jpeg, .png" 
+                          onChange={onImageChoose} 
+                          className="fileUpload" 
+                          name="arquivo" 
+                          id="arquivo" 
+                          type="file" 
                         />
-                    </Card>
-                </Col>
-              </Row>
-            </Form.Group>
-            { role == 1 && 
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Row>
-                  <Col xs={12} md={6}>
-                  <Autocomplete
-                      disableClearable
-                      onChange={handleChangeCorporate}
-                      options={corporate}
-                      value={serviceCenter.corporate_name}
-                      getOptionLabel={(options) => options.first_name ? options.first_name.toString() : serviceCenter.corporate_name}  
-                      isOptionEqualToValue={(option, value) => option.first_name ?? ""  === serviceCenter.corporate_name  }
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Corporate Account"
-                          InputProps={{
-                            ...params.InputProps,
-                            type: 'search',
-                          }}
+                    </Col>
+                    <Col xs={12} md={1}> 
+                        <Card raised className='sc-image' onClick={onclickImage}>
+                            <CardMedia 
+                              className='sc-image' 
+                              src={serviceCenter.image ? serviceCenter.image :  NoImage} 
+                              component="img"
+                              height="40"
+                              alt={"alt"}
+                              sx={{  objectFit: "contain" }}
+                            />
+                        </Card>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                { role == 1 && 
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Row>
+                      <Col xs={12} md={6}>
+                      <Autocomplete
+                          disableClearable
+                          onChange={handleChangeCorporate}
+                          options={corporate}
+                          value={serviceCenter.corporate_name}
+                          getOptionLabel={(options) => options.first_name ? options.first_name.toString() : serviceCenter.corporate_name}  
+                          isOptionEqualToValue={(option, value) => option.first_name ?? ""  === serviceCenter.corporate_name  }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Corporate Account"
+                              InputProps={{
+                                ...params.InputProps,
+                                type: 'search',
+                              }}
+                            />
+                          )}
                         />
-                      )}
-                    />
-                  </Col>
-                </Row>
-              </Form.Group>
-            }
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Row >
-                <Col xs={12} md={12}>
-                  <Button 
-                    variant="success"  
-                    type="submit" 
-                    disabled={isSubmitting} 
-                  >
-                    {id ? 'Save Changes' : 'Save'}
-                  </Button>
-                </Col>
-              </Row>
-            </Form.Group>
-          </Form>
+                      </Col>
+                    </Row>
+                  </Form.Group>
+                }
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Row >
+                    <Col xs={12} md={12}>
+                      <Button 
+                        variant="success"  
+                        type="submit" 
+                        disabled={isSubmitting} 
+                      >
+                        {id ? 'Save Changes' : 'Save'}
+                      </Button>
+                    </Col>
+                  </Row>
+                </Form.Group>
+              </Form>
             </Modal.Body>
         </Modal>
 

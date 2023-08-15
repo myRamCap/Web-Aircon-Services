@@ -5,7 +5,6 @@ export default function ServiceCenterServices() {
   return (
     <div id="servicecenterservices">
       <ServiceCenterServicesDataTable />
-      
     </div>
   )
 }

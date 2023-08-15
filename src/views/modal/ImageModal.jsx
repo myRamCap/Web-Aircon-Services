@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import { CardMedia } from '@mui/material';
 
 export default function ImageModal(props) {
- 
   return (
     <div id="image_modal">
         <Modal

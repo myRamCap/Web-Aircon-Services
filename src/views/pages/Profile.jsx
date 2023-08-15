@@ -9,9 +9,11 @@ import Swal from 'sweetalert2'
 import axiosClient from '../../axios-client';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/loader/Loading';
 
 export default function Profile() {
     const {user_ID} = useStateContext()
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate()
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState(null)
@@ -34,6 +36,7 @@ export default function Profile() {
           ...profile,
           image_url: data.image,
         }) 
+        setIsLoading(false);
       } catch (error) {
         // Handle error
       }
@@ -103,12 +106,16 @@ export default function Profile() {
               <Row>
                 <Col xs={12} md={4}>
                     <Card raised sx={{ maxWidth: 550 }}>
+                      {isLoading ? (
+                        <div> <Loading /> </div>
+                      ) : (
                         <CardMedia
                             component="img"
                             height="200"
                             image={profile.image_url ? profile.image_url : NoImage}
                             sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }}
                         />
+                      )}
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div" align='center'>
                                 Profile
@@ -128,15 +135,15 @@ export default function Profile() {
                     </Card>
                 </Col>
                 <Col xs={12} md={6}>
-                {errors && 
-              <div className="sevices_logo_errors">
-                {Object.keys(errors).map(key => (
-                  errors[key].map((message, index) => (
-                    <p key={index}>{message}</p>
-                  ))
-                ))}
-              </div>
-            }
+                    {errors && 
+                      <div className="sevices_logo_errors">
+                        {Object.keys(errors).map(key => (
+                          errors[key].map((message, index) => (
+                            <p key={index}>{message}</p>
+                          ))
+                        ))}
+                      </div>
+                    }
                     <Col xs={12} md={12} className="mt-3">
                         <TextField 
                           type="password" 

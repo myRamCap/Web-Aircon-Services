@@ -8,15 +8,12 @@ import ACType from '../../data/JSON/refACType.json'
 import ACHP from '../../data/JSON/refHP.json' 
 import { Autocomplete, Card, CardMedia, TextField } from '@mui/material';
 import NoImage from '../../assets/images/No-Image.png';
-import { VoiceChatOutlined } from '@mui/icons-material';
 import axiosClient from '../../axios-client';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
 
-
 export default function AirconListModal(props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [image, setImage] = useState('')
   const navigate = useNavigate()
   const [errors, setErrors] = useState(null)
   const [clients, setClients] = useState([])

@@ -12,7 +12,6 @@ export default function Testing(props) {
     setValue(newValue)
   }
  
-
   return (
     
     <div> Test - {location.state}

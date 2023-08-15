@@ -49,7 +49,6 @@ export default function NotificationsModal(props) {
             setNotification({
                 ...notification,
                 category: 'ALL',
-                // service_center_id: null,
                 service_center: null,
             })
             setValue([
@@ -66,8 +65,6 @@ export default function NotificationsModal(props) {
             setNotification({
                 ...notification,
                 category: 'SELECTED',
-                // corporate_id: null,
-                // corporate_name: null,
             })
         } 
     };
@@ -91,41 +88,7 @@ export default function NotificationsModal(props) {
         }
     };
 
-    // const optionsCorporateAccount = corporate.map((option) => {
-    //     const firstLetter = option.first_name[0].toUpperCase();
-    //     return {
-    //         firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-    //         ...option,
-    //     };
-    // });
-
-    // const optionsSC = serviceCenter.map((option) => {
-    //     const firstLetter = option.name[0].toUpperCase();
-    //     return {
-    //         firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-    //         ...option,
-    //     };
-    // });
-
-    // const handleChangeCorporate = (event, newValue) => {
-    //     setNotification({
-    //         ...notification,
-    //         corporate_id: newValue.id,
-    //         corporate_name: newValue.first_name+' '+newValue.last_name,
-    //     })
-    // };
-
     const handleChangeServiceCenter = (event, newValue) => {
-        // setValue([
-        //     ...fixedOptions,
-        //     ...newValue.filter((option) => fixedOptions.indexOf(option) === -1)
-        // ])
-        // setNotification({
-        //     ...notification,
-        //     service_center_id: newValue.id,
-        //     service_center: newValue.name,
-        // })
- 
         setValue([
             ...fixedOptions,
             ...newValue.filter((option) => fixedOptions.indexOf(option) === -1)
@@ -283,7 +246,6 @@ export default function NotificationsModal(props) {
                         <Row>
                             <Col xs={12} md={6}>
                                 <FormControlLabel
-                               
                                     control={
                                         <Checkbox
                                             checked={checkbox1Checked}
@@ -309,52 +271,7 @@ export default function NotificationsModal(props) {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Row>
-                            {/* <Col xs={12} md={6}>
-                                <Autocomplete
-                                    disableClearable
-                                    id="corporate-account-autocomplete"
-                                    value={notification.first_name ?? null}
-                                    onChange={handleChangeCorporate}
-                                    options={optionsCorporateAccount}
-                                    disabled={!checkbox1Checked}
-                                    getOptionLabel={(options) => options.first_name ? options?.first_name  : notification.first_name }
-                                    isOptionEqualToValue={(option, value) => option.first_name ?? "" === notification.first_name }
-                                    renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Corporate Account"
-                                        InputProps={{
-                                        ...params.InputProps,
-                                        type: 'search',
-                                        }}
-                                    />
-                                    )}
-                                />
-                            </Col> */}
                             <Col xs={12} md={12}>
-                                {/* <Autocomplete
-                                    multiple
-                                    disableClearable
-                                    id="service-center-autocomplete"
-                                    onChange={handleChangeServiceCenter}
-                                    value={notification.service_center ?? null}
-                                    options={optionsSC}
-                                    // disabled={!checkbox2Checked}
-                                    getOptionLabel={(option) => option.name}
-                                    isOptionEqualToValue={(option, value) => option.name === value.name}
-                                    // getOptionLabel={(option) => option.name ? option.name : notification.service_center}
-                                    // isOptionEqualToValue={(option, value) => option.name ?? "" === notification.service_center}
-                                    renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Service Center"
-                                        InputProps={{
-                                        ...params.InputProps,
-                                        type: 'search',
-                                        }}
-                                    />
-                                    )}
-                                /> */}
                                 <Autocomplete
                                     disabled={!checkbox2Checked}
                                     multiple

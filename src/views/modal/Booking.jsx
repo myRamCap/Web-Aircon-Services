@@ -67,8 +67,6 @@ export default function Booking(props) {
     }
   }
 
-  
-
   const getServices = async () => {
     try {
  
@@ -280,8 +278,6 @@ export default function Booking(props) {
       getClients()
       getOperation()
     } else if (props.show == false) {
- 
-
       setBooking({
         ...booking,
         id: null,
@@ -306,7 +302,6 @@ export default function Booking(props) {
     } 
   },[props.show])
 
-  
   const isWeekend = (date) => {
     const day = new Date(date).getDay();
     const daysOff = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];

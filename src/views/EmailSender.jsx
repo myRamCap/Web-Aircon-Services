@@ -21,13 +21,8 @@ export default function EmailSender() {
       }, function(error) {
          console.log('FAILED...', error);
       });
-
-      
-
     }
   
- 
-
   return (
     <div>
       <form className="test-mailing">

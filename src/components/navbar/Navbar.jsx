@@ -1,45 +1,44 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/images/mangpogs.png'
-import axiosClient from '../../axios-client';
 import { useStateContext } from '../../contexts/ContextProvider';
-import Swal from 'sweetalert2'
+
 
 export default function Navbar() {
-    const {setUser, setToken, setRole, role, setUser_ID} = useStateContext()
+    const {role} = useStateContext()
     const location = useLocation();
     const { pathname } = location;
     const splitLocation = pathname.split("/");
     const [active, setActive] = useState(true)
     const toggle = () => setActive (!active);
 
-    const onLogout = (ev) => {
-        ev.preventDefault()
-        Swal.fire({
-            title: 'Are you sure you want to Logout?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#32be8f',
-            confirmButtonText: 'Yes, Logout!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                'Logout Successfully!',
-                'you will now be redirected to the Login page',
-                'success'
-                ).then(() => {
-                axiosClient.post('/logout')
-                .then(() => {
-                    setUser({})
-                    setToken(null)
-                    setRole(null)
-                    setRole(null)
-                    setUser_ID(null)
-                })
-                })
-            }
-        })
-    }
+    // const onLogout = (ev) => {
+    //     ev.preventDefault()
+    //     Swal.fire({
+    //         title: 'Are you sure you want to Logout?',
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#32be8f',
+    //         confirmButtonText: 'Yes, Logout!'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             Swal.fire(
+    //             'Logout Successfully!',
+    //             'you will now be redirected to the Login page',
+    //             'success'
+    //             ).then(() => {
+    //             axiosClient.post('/logout')
+    //             .then(() => {
+    //                 setUser({})
+    //                 setToken(null)
+    //                 setRole(null)
+    //                 setRole(null)
+    //                 setUser_ID(null)
+    //             })
+    //             })
+    //         }
+    //     })
+    // }
 
   return (
     <div className={`sidebar ${active ? 'active' : ''}`}>
@@ -211,7 +210,7 @@ export default function Navbar() {
             <li>
                 <hr />
             </li>
-            <li>
+            {/* <li>
                 
                 <a href="" onClick={onLogout}>
                     <i>
@@ -221,7 +220,7 @@ export default function Navbar() {
                     <span className="link_name">Logout</span>
                 </a>
                 <span className="tooltip">Logout</span>
-            </li>
+            </li> */}
             </ul>
     </div>
   )

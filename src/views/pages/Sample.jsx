@@ -3,10 +3,7 @@ import { Autocomplete, Checkbox, FormControlLabel, Card, CardMedia, TextField, C
 
 export default function Sample() {
     const fixedOptions = [];
-  const [value, setValue] = useState([...fixedOptions]);
-
-  // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-
+    const [value, setValue] = useState([...fixedOptions]);
 
   return (
     <Autocomplete
@@ -38,7 +35,6 @@ export default function Sample() {
     />
   )
 }
-
 
 const top100Films = [
     { title: 'The Shawshank Redemption', year: 1994 },
